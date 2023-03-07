@@ -1,0 +1,31 @@
+body{
+  background-color: #cce5ff !important;
+}
+
+.navbar-nav li a.nav-link {
+  font-size: 21px;
+}
+
+.navbar {
+  height: 80px;
+}
+
+.content-container {
+  padding-top: 85px;
+}
+
+/* index.html */
+.search-box{
+  padding-top: 30px;
+  width: 60%;
+}
+
+.search-text{
+  text-align: center;
+}
+
+/* about.html */
+.about-content{
+  width: 95%;
+  margin: 0 auto;
+}

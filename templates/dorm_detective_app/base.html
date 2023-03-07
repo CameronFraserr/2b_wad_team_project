@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="icon" href="{% static 'images/dd_favicon.png' %}" type="image/png">
+    <title>
+        DD - {% block title_block %} Dorm Detective {% endblock title_block %}
+    </title>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-primary navbar-light fixed-top">
+        <div class="container-fluid">
+            <ul class="navbar-nav flex-grow-1 justify-content-center nav-fill align-items-center">
+                <a class="navbar-brand text-light" href="{% url 'dorm_detective:index' %}">
+                    <img src="{% static 'images/dd_logo.png' %}" alt="Dorm Detective Logo" height="65px;" width="75px;">
+                </a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#", role="button" data-bs-toggle="dropdown">Universities</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">University of Glasgow</a></li>
+                        <li><a class="dropdown-item" href="#">University of Strathclyde</a></li>
+                        <li><a class="dropdown-item" href="#">Glasgow Caledonian University</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'dorm_detective:about' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">FAQs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="#">Login/Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid content-container align-items-center">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
