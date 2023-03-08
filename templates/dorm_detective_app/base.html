@@ -14,7 +14,7 @@
     {% bootstrap_javascript %}
     <link rel="icon" href="{% static 'images/dd_favicon.png' %}" type="image/png">
     <title>
-        DD - {% block title_block %} Dorm Detective {% endblock title_block %}
+        {% block title_block %} Dorm Detective {% endblock title_block %}
     </title>
 
 </head>
@@ -28,7 +28,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#", role="button" data-bs-toggle="dropdown">Universities</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">University of Glasgow</a></li>
+                        <li><a class="dropdown-item" href="{% url 'dorm_detective:glasgow' %}">University of Glasgow</a></li>
                         <li><a class="dropdown-item" href="#">University of Strathclyde</a></li>
                         <li><a class="dropdown-item" href="#">Glasgow Caledonian University</a></li>
                     </ul>

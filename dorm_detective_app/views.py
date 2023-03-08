@@ -8,3 +8,7 @@ def index(request):
 def about(request):
     response = render(request, 'dorm_detective_app/about.html')
     return response
+
+def glasgow(request):
+    response = render(request, 'dorm_detective_app/glasgow.html')
+    return response

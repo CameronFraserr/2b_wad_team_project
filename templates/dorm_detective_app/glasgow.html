@@ -1,0 +1,11 @@
+{% extends 'dorm_detective_app/base.html' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
+         <li class="breadcrumb-item"><a href="#">Universities</a></li>
+         <li class="breadcrumb-item active" aria-current="page">University of Glasgow</li>
+        </ol>
+    </nav>
+{% endblock %}
