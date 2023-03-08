@@ -12,3 +12,7 @@ def about(request):
 def glasgow(request):
     response = render(request, 'dorm_detective_app/glasgow.html')
     return response
+
+def finniestone_avenue(request):
+    response = render(request, 'dorm_detective_app/finnieston_avenue.html')
+    return response
