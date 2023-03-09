@@ -11,7 +11,46 @@
     </nav>
 
     <div class="container-fluid">
-        <a href="{% url 'dorm_detective:finniestone_avenue' %}">Finnieston Avenue</a>
+        <div class="row mb-3">
+            <div class="col-lg-4">
+                <img class="w-100 h-100" src="{{ MEDIA_URL }}glasgow.jpg" alt="university of glasgow">
+            </div>
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center justify-content-center">
+                    <h1><b>University of Glasgow</b></h1>
+                </div>
+                <div class="about-content d-flex align-items-center justify-content-center">
+                    <p class="text-center">
+                        The University of Glasgow (abbreviated as Glas. in post-nominals; Scottish Gaelic: Oilthigh Ghlaschu[4]) is a public research university in Glasgow, Scotland. Founded by papal bull in 1451 [O.S. 1450],[5] it is the fourth-oldest university in the English-speaking world and one of Scotland's four ancient universities. Along with the universities of Edinburgh, Aberdeen, and St Andrews, the university was part of the Scottish Enlightenment during the 18th century.
+                        <br><br>
+                        In common with universities of the pre-modern era, Glasgow originally educated students primarily from wealthy backgrounds; however, it became a pioneer[citation needed] in British higher education in the 19th century by also providing for the needs of students from the growing urban and commercial middle class. Glasgow University served all of these students by preparing them for professions: law, medicine, civil service, teaching, and the church. It also trained smaller but growing numbers for careers in science and engineering.[6] The annual income of the institution for 2021–22 was £923.6 million of which £196.1 million was from research grants and contracts, with an expenditure of £998.5 million.[1] The university has the sixth-largest endowment of any university in the UK. It is a member of Universitas 21, the Russell Group[7] and the Guild of European Research-Intensive Universities.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="row align-items-center justify-content-center">
+                    <h2 class="text-center"><b>Location</b></h2>
+                </div>
+                <div class="row">
+                    <img class="w-100 h-100" src="{{ MEDIA_URL }}ggowmap.jpg" alt="map of glasgow location">
+                </div>
+
+            </div>
+            <div class="col-lg-8">
+                <div class="row">
+                    <h2 class="text-center"><b>Accommodations</b></h2>
+                </div>
+                <div class="row">
+                     <div class="list-group">
+                        <a href="{% url 'dorm_detective:finniestone_avenue' %}" class="list-group-item">Finnieston Avenue</a>
+                        <a href="#" class="list-group-item">Cairncross House</a>
+                        <a href="#" class="list-group-item">Murano Street</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
