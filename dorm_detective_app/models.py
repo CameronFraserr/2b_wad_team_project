@@ -13,7 +13,8 @@ class University(models.Model):
         validators=[
             MaxValueValidator(90.0),
             MinValueValidator(-90.0),
-        ]
+        ],
+        default=0,
     )
     longitude = models.DecimalField(
         max_digits=9,
@@ -21,7 +22,8 @@ class University(models.Model):
         validators=[
             MaxValueValidator(180.0),
             MinValueValidator(-180.0),
-        ]
+        ],
+        default=0,
     )
 
     class Meta:

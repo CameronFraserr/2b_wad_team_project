@@ -1,7 +1,10 @@
 import django
-from dorm_detective_app.models import University, UserProfile
+import os
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dorm_detective.settings')
 
 django.setup()
+
+from dorm_detective_app.models import University, UserProfile
 
 
 def populate():
@@ -30,3 +33,8 @@ def add_university(name, latitude, longitude):
     uni.save()
 
     return uni
+
+
+if __name__ == '__main__':
+    print('Running the population script...')
+    populate()
