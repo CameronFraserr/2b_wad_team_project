@@ -4,9 +4,9 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
-         <li class="breadcrumb-item"><a href="#">Universities</a></li>
-         <li class="breadcrumb-item active" aria-current="page">University of Glasgow</li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:universities' %}">Universities</a></li>
+            <li class="breadcrumb-item active" aria-current="page">University of Glasgow</li>
         </ol>
     </nav>
 
@@ -21,9 +21,22 @@
                 </div>
                 <div class="about-content d-flex align-items-center justify-content-center">
                     <p class="text-center">
-                        The University of Glasgow (abbreviated as Glas. in post-nominals; Scottish Gaelic: Oilthigh Ghlaschu[4]) is a public research university in Glasgow, Scotland. Founded by papal bull in 1451 [O.S. 1450],[5] it is the fourth-oldest university in the English-speaking world and one of Scotland's four ancient universities. Along with the universities of Edinburgh, Aberdeen, and St Andrews, the university was part of the Scottish Enlightenment during the 18th century.
+                        The University of Glasgow (abbreviated as Glas. in post-nominals; Scottish Gaelic: Oilthigh
+                        Ghlaschu[4]) is a public research university in Glasgow, Scotland. Founded by papal bull in 1451
+                        [O.S. 1450],[5] it is the fourth-oldest university in the English-speaking world and one of
+                        Scotland's four ancient universities. Along with the universities of Edinburgh, Aberdeen, and St
+                        Andrews, the university was part of the Scottish Enlightenment during the 18th century.
                         <br><br>
-                        In common with universities of the pre-modern era, Glasgow originally educated students primarily from wealthy backgrounds; however, it became a pioneer[citation needed] in British higher education in the 19th century by also providing for the needs of students from the growing urban and commercial middle class. Glasgow University served all of these students by preparing them for professions: law, medicine, civil service, teaching, and the church. It also trained smaller but growing numbers for careers in science and engineering.[6] The annual income of the institution for 2021–22 was £923.6 million of which £196.1 million was from research grants and contracts, with an expenditure of £998.5 million.[1] The university has the sixth-largest endowment of any university in the UK. It is a member of Universitas 21, the Russell Group[7] and the Guild of European Research-Intensive Universities.
+                        In common with universities of the pre-modern era, Glasgow originally educated students
+                        primarily from wealthy backgrounds; however, it became a pioneer[citation needed] in British
+                        higher education in the 19th century by also providing for the needs of students from the
+                        growing urban and commercial middle class. Glasgow University served all of these students by
+                        preparing them for professions: law, medicine, civil service, teaching, and the church. It also
+                        trained smaller but growing numbers for careers in science and engineering.[6] The annual income
+                        of the institution for 2021–22 was £923.6 million of which £196.1 million was from research
+                        grants and contracts, with an expenditure of £998.5 million.[1] The university has the
+                        sixth-largest endowment of any university in the UK. It is a member of Universitas 21, the
+                        Russell Group[7] and the Guild of European Research-Intensive Universities.
                     </p>
                 </div>
             </div>
@@ -42,11 +55,49 @@
                 <div class="row">
                     <h2 class="text-center"><b>Accommodations</b></h2>
                 </div>
-                <div class="row">
-                     <div class="list-group">
-                        <a href="{% url 'dorm_detective:finniestone_avenue' %}" class="list-group-item">Finnieston Avenue</a>
-                        <a href="#" class="list-group-item">Cairncross House</a>
-                        <a href="#" class="list-group-item">Murano Street</a>
+                {#                <div class="row">#}
+                {#                     <div class="list-group">#}
+                {#                        <a href="{% url 'dorm_detective:finnieston_avenue' %}" class="list-group-item">Finnieston Avenue</a>#}
+                {#                        <a href="#" class="list-group-item">Cairncross House</a>#}
+                {#                        <a href="#" class="list-group-item">Murano Street</a>#}
+                {#                    </div>#}
+                {#                </div>#}
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                    <div class="col">
+                        <a href="{% url 'dorm_detective:finnieston_avenue' %}"
+                           style="text-decoration: none; color: black">
+                            <div class="card h-100">
+                                <img src="{{ MEDIA_URL }}finnieston_avenue.jpg" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Finnieston Avenue</b></h5>
+                                    <p class="card-text">Amazing</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col">
+                        <a href="#" style="text-decoration: none; color: black">
+                            <div class="card h-100">
+                                <img src="" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Cairncross House</b></h5>
+                                    <p class="card-text">Fantastic</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="#" style="text-decoration: none; color: black">
+                            <div class="card h-100">
+                                <img src="" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title"><b>Murano Street</b></h5>
+                                    <p class="card-text">Good Laugh</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

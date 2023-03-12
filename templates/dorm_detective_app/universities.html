@@ -1,0 +1,129 @@
+{% extends 'dorm_detective_app/base.html' %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
+            <li class="breadcrumb-item active">Universities</li>
+        </ol>
+    </nav>
+
+    <div class="row mb-3 text-center">
+        <h2 class="mb-3"><b>Universities</b></h2>
+        <p><em>All Universities hosted by Dorm Detective are not endorsed. We do not receive from these Universities nor
+            do we alter reviews.</em></p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <a href="{% url 'dorm_detective:glasgow' %}" style="text-decoration: none; color: black">
+                <div class="card h-100">
+                    <img src="{{ MEDIA_URL }}glasgow.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>University of Glasgow</b></h5>
+                        <p class="card-text">Founded in 1451, The University of Glasgow is a world-class university,
+                            committed
+                            to working with global partners to create high-quality research with real-life impact.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <a href="{% url 'dorm_detective:finnieston_avenue' %}">Finnieston Avenue</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Cairncross House</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Murano Street</a>
+                        </div>
+                    </ul>
+                    <div class="card-footer">
+                        <a href="https://www.gla.ac.uk/" target="_blank" class="card-link">University Website</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#" style="text-decoration: none; color: black">
+                <div class="card h-100">
+                    <img src="{{ MEDIA_URL }}strathclyde.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>University of Strathclyde</b></h5>
+                        <p class="card-text">The University of Strathclyde is a public research university located in
+                            Glasgow,
+                            Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's second-oldest
+                            university.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <a href="#">Birkbeck Court</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Garnett Hall</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Chancellors Hall</a>
+                        </div>
+                    </ul>
+                    <div class="card-footer">
+                        <a href="https://www.strath.ac.uk/" target="_blank" class="card-link">University Website</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#" style="text-decoration: none; color: black">
+                <div class="card h-100">
+                    <img src="{{ MEDIA_URL }}caledonian.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Glasgow Caledonian University</b></h5>
+                        <p class="card-text">Glasgow Caledonian University, informally GCU, Caledonian or Caley, is a
+                            public
+                            university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
+                            Glasgow and Glasgow Polytechnic.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <a href="#">Caledonian Court</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Dobbie's Point</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Gallery Apartments</a>
+                        </div>
+                    </ul>
+                    <div class="card-footer">
+                        <a href="https://www.gcu.ac.uk/" target="_blank" class="card-link">University Website</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#" style="text-decoration: none; color: black">
+                <div class="card h-100">
+                    <img src="{{ MEDIA_URL }}rcs.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title"><b>Royal Conservatoire of Scotland</b></h5>
+                        <p class="card-text">The Royal Conservatoire of Scotland, formerly the Royal Scottish Academy of
+                            Music and Drama is a conservatoire of dance, drama, music, production, and film in Glasgow,
+                            Scotland. It is a member of the Federation of Drama Schools.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <div class="list-group-item">
+                            <a href="#">Base Glasgow</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">Merchant City House</a>
+                        </div>
+                        <div class="list-group-item">
+                            <a href="#">George Square Studios</a>
+                        </div>
+                    </ul>
+                    <div class="card-footer">
+                        <a href="https://www.rcs.ac.uk/" target="_blank" class="card-link">University Website</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

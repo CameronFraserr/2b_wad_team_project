@@ -4,16 +4,16 @@
  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
-         <li class="breadcrumb-item"><a href="#">Universities</a></li>
+         <li class="breadcrumb-item"><a href="{% url 'dorm_detective:universities' %}">Universities</a></li>
          <li class="breadcrumb-item"><a href="{% url 'dorm_detective:glasgow' %}">University of Glasgow</a></li>
-         <li class="breadcrumb-item active" aria-current="page">Finnieston Avenue</li>
+         <li class="breadcrumb-item active">Finnieston Avenue</li>
     </ol>
  </nav>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-4">
-            <img src="{{ MEDIA_URL }}finnieston_avenue.jpg" alt="finniestone avenue dorm room">
+            <img src="{{ MEDIA_URL }}finnieston_avenue.jpg" alt="finnieston avenue dorm room">
         </div>
         <div class="col-lg-8">
             <div class="d-flex align-items-center justify-content-center">

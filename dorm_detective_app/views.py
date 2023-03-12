@@ -13,6 +13,10 @@ def glasgow(request):
     response = render(request, 'dorm_detective_app/glasgow.html')
     return response
 
-def finniestone_avenue(request):
+def finnieston_avenue(request):
     response = render(request, 'dorm_detective_app/finnieston_avenue.html')
+    return response
+
+def universities(request):
+    response = render(request, 'dorm_detective_app/universities.html')
     return response
