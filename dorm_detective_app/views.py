@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from dorm_detective.forms import UserForm, UserProfileForm
+from dorm_detective.models import UserProfile
 from datetime import datetime
 
 
@@ -153,7 +155,7 @@ def user_login(request):
 				return redirect(reverse('dorm_detective:home'))
 			else:
 				# An inactive account was used - no logging in!
-				return HttpResponse("Your Rango account is disabled.")
+				return HttpResponse("Your Dorm Detective account is disabled.")
 		else:
 			# Bad login details were provided. So we can't log the user in.
 			print(f"Invalid login details: {username}, {password}")
@@ -170,7 +172,7 @@ def user_login(request):
 @login_required
 def restricted(request):
 	#return HttpResponse("Since you're logged in, you can see this text!")
-	return render(request, 'rango/restricted.html')
+	return render(request, 'dorm_detective/restricted.html')
 
 
 # access the view.
