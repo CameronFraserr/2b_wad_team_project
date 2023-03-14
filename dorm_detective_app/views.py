@@ -32,14 +32,14 @@ def my_reviews(request):
 def universities(request):
 	return HttpResponse("Universities Page")
 
-def university(request):
+def university_name(request):
 	return HttpResponse("Specific University Page")
 
-def accommodation(request):
+def accommodation_name(request):
 	return HttpResponse("Specific Accommodation Page")
 
 
-def register(request):
+def sign_up(request):
 	# A boolean value for telling the template
 	# whether the registration was successful.
 	# Set to False initially. Code changes value to
@@ -94,7 +94,7 @@ def register(request):
 
 	# Render the template depending on the context.
 	return render(request,
-		'rango/register.html',
+		'rango/sign_up.html',
 		context = {'user_form': user_form,
 		'profile_form': profile_form,
 		'registered': registered})
