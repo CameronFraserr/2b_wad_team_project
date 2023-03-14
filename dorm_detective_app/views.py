@@ -7,36 +7,60 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 
-# Create your views here.
-
 def home(request):
-	return HttpResponse("Home Page")
+    context = {}
+    template_name = 'dorm_detective/home.html'
+    return render(request, template_name, context)
+
 
 def about(request):
-	return HttpResponse("About Page")
+    context = {}
+    template_name = 'dorm_detective/about.html'
+    return render(request, template_name, context)
+
 
 def contact_us(request):
-	return HttpResponse("Contact Us Page")
+    context = {}
+    template_name = 'dorm_detective/contact_us.html'
+    return render(request, template_name, context)
+
 
 def faq(request):
-	return HttpResponse("FAQs Page")
+    context = {}
+    template_name = 'dorm_detective/faq.html'
+    return render(request, template_name, context)
+
 
 @login_required
 def my_account(request):
-	return HttpResponse("My Account Page")
+    context = {}
+    template_name = 'dorm_detective/my_account.html'
+    return render(request, template_name, context)
+
 
 @login_required
 def my_reviews(request):
-	return HttpResponse("My Reviews Page")
+    context = {}
+    template_name = 'dorm_detective/my_reviews.html'
+    return render(request, template_name, context)
+
 
 def universities(request):
-	return HttpResponse("Universities Page")
+    context = {}
+    template_name = 'dorm_detective/universities.html'
+    return render(request, template_name, context)
+
 
 def university_name(request):
-	return HttpResponse("Specific University Page")
+    context = {}
+    template_name = 'dorm_detective/university_name.html'
+    return render(request, template_name, context)
+
 
 def accommodation_name(request):
-	return HttpResponse("Specific Accommodation Page")
+    context = {}
+    template_name = 'dorm_detective/accommodation_name.html'
+    return render(request, template_name, context)
 
 
 def sign_up(request):
@@ -94,7 +118,7 @@ def sign_up(request):
 
 	# Render the template depending on the context.
 	return render(request,
-		'rango/sign_up.html',
+		'dorm_detective/sign_up.html',
 		context = {'user_form': user_form,
 		'profile_form': profile_form,
 		'registered': registered})
@@ -126,7 +150,7 @@ def user_login(request):
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
 				login(request, user)
-				return redirect(reverse('rango:index'))
+				return redirect(reverse('dorm_detective:home'))
 			else:
 				# An inactive account was used - no logging in!
 				return HttpResponse("Your Rango account is disabled.")
@@ -140,7 +164,7 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		return render(request, 'rango/login.html')
+		return render(request, 'dorm_detective/login.html')
 
 
 @login_required
@@ -155,7 +179,7 @@ def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
 	# Take the user back to the homepage.
-	return redirect(reverse('rango:index'))
+	return redirect(reverse('dorm_detective:home'))
 
 
 # A helper method
