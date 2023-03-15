@@ -3,7 +3,7 @@ from .forms import UserForm, UserProfileForm
 
 # Create your views here.
 
-def register(request):
+def signup(request):
     registered = False
 
     if request.method == 'POST':
@@ -28,4 +28,4 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'dorm_detective_app/register.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'dorm_detective_app/signup.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
