@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 # Create your views here.
 
-def signup(request):
+def sign_up(request):
     registered = False
 
     if request.method == 'POST':
@@ -36,4 +36,4 @@ def signup(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'dorm_detective_app/signup.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'dorm_detective_app/sign_up.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})

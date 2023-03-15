@@ -13,7 +13,7 @@
             {% if registered %}
                 <p>Thanks for registering! You are now logged in.</p>
             {% else %}
-            <form id="user_form" method="post" action="{% url 'dorm_detective_app:signup' %}" enctype="multipart/form-data">
+            <form id="user_form" method="post" action="{% url 'dorm_detective_app:sign_up' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 
                 {{ user_form.as_p }}

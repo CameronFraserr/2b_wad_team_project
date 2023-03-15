@@ -4,5 +4,5 @@ from . import views
 app_name = 'dorm_detective_app'
 
 urlpatterns = [
-    path('signup/', views.signup, name='signup'),
+    path('sign_up/', views.sign_up, name='sign_up'),
 ]
