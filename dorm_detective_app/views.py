@@ -8,6 +8,13 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
+from registration.backends.default.views import RegistrationView
+from .forms import CustomRegistrationForm
+
+class CustomRegistrationView(RegistrationView):
+    def get_form_class(self):
+        return CustomRegistrationForm
+
 # Create your views here.
 
 def sign_up(request):

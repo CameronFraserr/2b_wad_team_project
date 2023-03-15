@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('registration.backends.simple.urls')),
     path('dorm_detective_app/', include('dorm_detective_app.urls', namespace='dorm_detective_app')),
 ]
 

@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dorm_detective_app'
+    'dorm_detective_app',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -85,8 +86,6 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
-LOGIN_URL = 'dorm_detective_app:login'
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -122,3 +121,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django Registration Redux settings
+# If true, users will be able to register
+REGISTRATION_OPEN = True
+
+# If true, the users will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+
+# The URL that Django redirects users to after logging in
+LOGIN_REDIRECT_URL = '/dorm_detective_app/'
+
+# The page users are directed to if they are not logged in
+LOGIN_URL = 'auth_login'
+
+REGISTRATION_FORM = 'dorm_detective_app.forms.CustomRegistrationForm'
