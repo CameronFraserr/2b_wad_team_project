@@ -5,6 +5,7 @@ from django.db import models
 
 class University(models.Model):
     NAME_MAX_LENGTH = 128
+    DESCRIPTION_MAX_LENGTH = 2048
 
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     latitude = models.DecimalField(
@@ -25,6 +26,9 @@ class University(models.Model):
         ],
         default=0,
     )
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
+    picture = models.ImageField(upload_to='university_images', blank=True)
+    website = models.URLField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Universities'
