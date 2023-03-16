@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from dorm_detective.models import UserProfile
+from dorm_detective_app.models import UserProfile
 from datetime import datetime
 from registration.backends.default.views import RegistrationView
 
@@ -21,12 +21,10 @@ def home(request):
     template_name = 'dorm_detective/home.html'
     return render(request, template_name, context)
 
-
-def about(request):
+def about_us(request):
     context = {}
     template_name = 'dorm_detective/about.html'
     return render(request, template_name, context)
-
 
 def contact_us(request):
     context = {}
@@ -216,10 +214,6 @@ def visitor_cookie_handler(request):
 
 	# Update/set the visits cookie
 	request.session['visits'] = visits
-
-
-
-
 
 
 def index(request):

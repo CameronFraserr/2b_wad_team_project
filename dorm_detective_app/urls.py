@@ -2,6 +2,8 @@ from django.urls import path
 from dorm_detective_app import views
 from registration.backends.default.views import RegistrationView
 
+from dorm_detective_app.views import CustomRegistrationView
+
 app_name = 'dorm_detective'
 
 urlpatterns = [

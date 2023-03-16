@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-MEDIA_DIR = os.path.join(BASE_DIR, 'media')MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'dorm_detective_app',
-    'registration',,
-    'bootstrap5'
+    'registration',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
