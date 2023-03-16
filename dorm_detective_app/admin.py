@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dorm_detective_app.models import University, UserProfile
+from dorm_detective_app.models import University, Accommodation, UserProfile
 
 
 class UniversityAdmin(admin.ModelAdmin):
@@ -7,4 +7,5 @@ class UniversityAdmin(admin.ModelAdmin):
 
 
 admin.site.register(University, UniversityAdmin)
+admin.site.register(Accommodation)
 admin.site.register(UserProfile)

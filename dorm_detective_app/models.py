@@ -37,6 +37,75 @@ class University(models.Model):
         return self.name
 
 
+class Accommodation(models.Model):
+    NAME_MAX_LENGTH = 128
+    DESCRIPTION_MAX_LENGTH = 2048
+
+    university = models.ForeignKey(University, on_delete=models.CASCADE, blank=False)
+    name = models.CharField(max_length=NAME_MAX_LENGTH)
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
+    latitude = models.DecimalField(
+        max_digits=8,
+        decimal_places=6,
+        validators=[
+            MaxValueValidator(90.0),
+            MinValueValidator(-90.0),
+        ],
+        default=0,
+    )
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        validators=[
+            MaxValueValidator(180.0),
+            MinValueValidator(-180.0),
+        ],
+        default=0,
+    )
+    rent_max = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0),
+        ],
+        # default=0.0,
+        null=True,
+        blank=True
+    )
+    rent_min = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0),
+        ],
+        # default=0.0,
+        null=True,
+        blank=True
+    )
+    avg_rating = models.DecimalField(
+        max_digits=2,
+        decimal_places=1,
+        validators=[
+            MaxValueValidator(5.0),
+            MinValueValidator(1.0),
+        ],
+        null=True,
+        blank=True
+    )
+    reviews_no = models.IntegerField(
+        validators=[
+            MinValueValidator(0),
+        ],
+        default=0
+    )
+
+    class Meta:
+        unique_together = ('university', 'name')
+
+    def __str__(self):
+        return self.name
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
