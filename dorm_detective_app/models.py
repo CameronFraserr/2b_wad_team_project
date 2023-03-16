@@ -27,7 +27,7 @@ class University(models.Model):
         default=0,
     )
     description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
-    picture = models.ImageField(upload_to='university_images', blank=True)
+    picture = models.ImageField(upload_to='university_images', blank=True, null=True)
     website = models.URLField(blank=True)
 
     class Meta:
@@ -103,13 +103,41 @@ class Accommodation(models.Model):
         unique_together = ('university', 'name')
 
     def __str__(self):
-        return self.name
+        return self.university.__str__() + " " + self.name
+
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    current_student = models.BooleanField(default=False)
+    current_student = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username
+
+
+class Review(models.Model):
+    TITLE_MAX_LENGTH = 128
+    DESCRIPTION_MAX_LENGTH = 1024
+
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=False)
+    title = models.CharField(max_length=TITLE_MAX_LENGTH)
+    description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH)
+    picture = models.ImageField(upload_to='review_images', blank=True, null=True)
+    likes = models.IntegerField(
+        validators=[
+            MinValueValidator(0),
+        ],
+        default=0
+    )
+    rating = models.IntegerField(
+        validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1),
+        ],
+        default=5
+    )
+
+    def __str__(self):
+        return self.accommodation.__str__() + " " + self.title + " by user " + self.user.__str__()
