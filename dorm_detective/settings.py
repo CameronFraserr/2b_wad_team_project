@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dorm_detective_app'
+    'dorm_detective_app',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'dorm_detective.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -91,9 +92,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 6},
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', 
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
@@ -119,6 +121,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django Registration Redux settings
+# If true, users will be able to register
+REGISTRATION_OPEN = True
+
+# If true, the users will be automatically logged in
+REGISTRATION_AUTO_LOGIN = True
+
+# The URL that Django redirects users to after logging in
+LOGIN_REDIRECT_URL = '/dorm_detective_app/'
+
+# The page users are directed to if they are not logged in
+LOGIN_URL = 'auth_login'
+
+REGISTRATION_FORM = 'dorm_detective_app.forms.CustomRegistrationForm'
 
 # Media files
 
