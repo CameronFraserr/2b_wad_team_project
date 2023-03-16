@@ -16,8 +16,14 @@ class UserProfileForm(forms.ModelForm):
         fields = ('current_student',)
 
 class CustomRegistrationForm(RegistrationForm):
-    is_student = forms.BooleanField(
+    current_student = forms.BooleanField(
         required=False,
         initial=False,
         label="I am a student",
     )
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        if commit:
+            UserProfile.objects.create(user=user, current_student=self.cleaned_data['current_student'])
+        return user
