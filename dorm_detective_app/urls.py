@@ -5,6 +5,7 @@ app_name = 'dorm_detective_app'
 
 urlpatterns = [
 	path('', views.home, name='home'),
+	path('admin/', views.admin, name='admin'),
 	path('universities/', views.universities, name='universities'),
 	path('universities/<str:university_name>/', views.university_name, name='university_name'),
 	path('univresities/<str:university_name>/<str:accomodation_name>/', views.accommodation_name, name='accommodation_name'),

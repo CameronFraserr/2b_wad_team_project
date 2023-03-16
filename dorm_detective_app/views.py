@@ -15,6 +15,12 @@ def home(request):
     return render(request, template_name, context)
 
 
+def admin(request):
+    context = {}
+    template_name = 'dorm_detective/admin.html'
+    return render(request, template_name, context)
+
+
 def about(request):
     context = {}
     template_name = 'dorm_detective/about.html'
@@ -209,9 +215,4 @@ def visitor_cookie_handler(request):
 
 	# Update/set the visits cookie
 	request.session['visits'] = visits
-
-
-
-
-
 
