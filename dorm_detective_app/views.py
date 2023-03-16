@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import dorm_detective_app.forms
+from dorm_detective_app.forms import *
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
