@@ -18,55 +18,55 @@ class CustomRegistrationView(RegistrationView):
 
 def home(request):
     context = {}
-    template_name = 'dorm_detective/home.html'
+    template_name = 'dorm_detective_app/home.html'
     return render(request, template_name, context)
 
 def about_us(request):
     context = {}
-    template_name = 'dorm_detective/about.html'
+    template_name = 'dorm_detective_app/about.html'
     return render(request, template_name, context)
 
 def contact_us(request):
     context = {}
-    template_name = 'dorm_detective/contact_us.html'
+    template_name = 'dorm_detective_app/contact_us.html'
     return render(request, template_name, context)
 
 
 def faq(request):
     context = {}
-    template_name = 'dorm_detective/faq.html'
+    template_name = 'dorm_detective_app/faq.html'
     return render(request, template_name, context)
 
 
 @login_required
 def my_account(request):
     context = {}
-    template_name = 'dorm_detective/my_account.html'
+    template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 
 
 @login_required
 def my_reviews(request):
     context = {}
-    template_name = 'dorm_detective/my_reviews.html'
+    template_name = 'dorm_detective_app/my_reviews.html'
     return render(request, template_name, context)
 
 
 def universities(request):
     context = {}
-    template_name = 'dorm_detective/universities.html'
+    template_name = 'dorm_detective_app/universities.html'
     return render(request, template_name, context)
 
 
 def university_name(request):
     context = {}
-    template_name = 'dorm_detective/university_name.html'
+    template_name = 'dorm_detective_app/university_name.html'
     return render(request, template_name, context)
 
 
 def accommodation_name(request):
     context = {}
-    template_name = 'dorm_detective/accommodation_name.html'
+    template_name = 'dorm_detective_app/accommodation_name.html'
     return render(request, template_name, context)
 
 
@@ -171,13 +171,13 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		return render(request, 'dorm_detective/login.html')
+		return render(request, 'dorm_detective_app/login.html')
 
 
 @login_required
 def restricted(request):
 	#return HttpResponse("Since you're logged in, you can see this text!")
-	return render(request, 'dorm_detective/restricted.html')
+	return render(request, 'dorm_detective_app/restricted.html')
 
 
 # access the view.
@@ -217,7 +217,7 @@ def visitor_cookie_handler(request):
 
 
 def index(request):
-    response = render(request, 'dorm_detective_app/index.html')
+    response = render(request, 'dorm_detective_app/home.html')
     return response
 
 def about(request):
