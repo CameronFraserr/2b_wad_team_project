@@ -16,9 +16,9 @@ class CustomRegistrationView(RegistrationView):
     def get_form_class(self):
         return CustomRegistrationForm
 
-def home(request):
+def index(request):
     context = {}
-    template_name = 'dorm_detective_app/home.html'
+    template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
 def about_us(request):
@@ -215,11 +215,6 @@ def visitor_cookie_handler(request):
 	# Update/set the visits cookie
 	request.session['visits'] = visits
 
-
-def index(request):
-    response = render(request, 'dorm_detective_app/home.html')
-    return response
-
 def about(request):
     response = render(request, 'dorm_detective_app/about.html')
     return response
@@ -230,10 +225,6 @@ def glasgow(request):
 
 def finnieston_avenue(request):
     response = render(request, 'dorm_detective_app/finnieston_avenue.html')
-    return response
-
-def universities(request):
-    response = render(request, 'dorm_detective_app/universities.html')
     return response
 
 # def sign_up(request):

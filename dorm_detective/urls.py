@@ -22,7 +22,7 @@ from dorm_detective_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('registration.backends.simple.urls')),
-    path('', views.index, name='index'),
+    path('', views.index, name='home'),
     path('dorm_detective/', include('dorm_detective_app.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

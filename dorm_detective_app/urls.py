@@ -7,10 +7,10 @@ from dorm_detective_app.views import CustomRegistrationView
 app_name = 'dorm_detective'
 
 urlpatterns = [
-	path('', views.home, name='home'),
+	path('', views.index, name='home'),
 	path('universities/', views.universities, name='universities'),
 	path('universities/<str:university_name>/', views.university_name, name='university_name'),
-	path('univresities/<str:university_name>/<str:accomodation_name>/', views.accommodation_name, name='accommodation_name'),
+	path('universities/<str:university_name>/<str:accomodation_name>/', views.accommodation_name, name='accommodation_name'),
 	path('about_us/', views.about_us, name='about_us'),
 	path('FAQ/', views.faq, name='faq'),
 	path('contact_us/', views.contact_us, name='contact_us'),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('accounts/register/', CustomRegistrationView.as_view(), name='django_registration_register'),
     path('universities/university_of_glasgow/', views.glasgow, name="glasgow"),
     path('glasgow/finnieston_avenue/', views.finnieston_avenue, name="finnieston_avenue"),
-    path('universities', views.universities, name="universities"),
+    # path('universities', views.universities, name="universities"),
     # path('sign_up/', views.sign_up, name='sign_up'),
     # path('login/', views.user_login, name='login'),
     # path('logout/', views.user_logout, name='logout'),
