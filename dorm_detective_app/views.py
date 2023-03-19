@@ -1,19 +1,27 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.urls import reverse
+from dorm_detective_app.forms import *
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+from django.urls import reverse
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from dorm_detective.forms import UserForm, UserProfileForm
-from dorm_detective.models import UserProfile
+from django.contrib.auth import authenticate, login, logout
+from dorm_detective_app.models import UserProfile
 from datetime import datetime
+from registration.backends.default.views import RegistrationView
 
+class CustomRegistrationView(RegistrationView):
+    def get_form_class(self):
+        return CustomRegistrationForm
 
 def home(request):
     context = {}
     template_name = 'dorm_detective/home.html'
     return render(request, template_name, context)
 
+<<<<<<< HEAD
 
 def admin(request):
     context = {}
@@ -22,10 +30,12 @@ def admin(request):
 
 
 def about(request):
+=======
+def about_us(request):
+>>>>>>> ece996c9f67d92d38f7d5a4af61cb41618e6d125
     context = {}
     template_name = 'dorm_detective/about.html'
     return render(request, template_name, context)
-
 
 def contact_us(request):
     context = {}
@@ -54,19 +64,24 @@ def my_reviews(request):
 
 
 def universities(request):
-    context = {}
+	universities = University.objects.all()
+    context = {'universities': universities}
     template_name = 'dorm_detective/universities.html'
     return render(request, template_name, context)
 
 
-def university_name(request):
-    context = {}
+def university_name(request, university_name_slug):
+	university = get_object_or_404(University, slug=university_name_slug)
+    accommodations = Accommodation.objects.filter(university=university)
+    context = {'university': university, 'accommodations': accommodations}
     template_name = 'dorm_detective/university_name.html'
     return render(request, template_name, context)
 
 
-def accommodation_name(request):
-    context = {}
+def accommodation_name(request, university_name_slug, accommodation_name_slug):
+	university = get_object_or_404(University, slug=university_name_slug)
+    accommodation = get_object_or_404(Accommodation, university=university, slug=accommodation_name_slug)
+    context = {'university': university, 'accommodation': accommodation}
     template_name = 'dorm_detective/accommodation_name.html'
     return render(request, template_name, context)
 
@@ -216,3 +231,84 @@ def visitor_cookie_handler(request):
 	# Update/set the visits cookie
 	request.session['visits'] = visits
 
+<<<<<<< HEAD
+=======
+
+def index(request):
+    response = render(request, 'dorm_detective_app/index.html')
+    return response
+
+def about(request):
+    response = render(request, 'dorm_detective_app/about.html')
+    return response
+
+def glasgow(request):
+    response = render(request, 'dorm_detective_app/glasgow.html')
+    return response
+
+def finnieston_avenue(request):
+    response = render(request, 'dorm_detective_app/finnieston_avenue.html')
+    return response
+
+def universities(request):
+    response = render(request, 'dorm_detective_app/universities.html')
+    return response
+
+# def sign_up(request):
+#     registered = False
+
+#     if request.method == 'POST':
+#         user_form = UserForm(data=request.POST)
+#         profile_form = UserProfileForm(data=request.POST)
+
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user = user_form.save(commit=False)  # don't save the user object yet
+
+#             # Validate the password using Django's built-in password validators
+#             try:
+#                 validate_password(user.password)
+#             except ValidationError as e:
+#                 user_form.add_error('password', e)  # Add the password validation error to user_form
+#             else:
+#                 user.set_password(user.password)
+#                 user.save()
+
+#                 profile = profile_form.save(commit=False)
+#                 profile.user = user
+#                 profile.save()
+
+#                 registered = True
+
+#         else:
+#             print(user_form.errors, profile_form.errors)
+#     else:
+#         user_form = UserForm()
+#         profile_form = UserProfileForm()
+
+#     return render(request, 'dorm_detective_app/sign_up.html', context={'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+
+#         user = authenticate(username=username, password=password)
+
+#         if user:
+#             if user.is_active:
+#                 login(request, user)
+#                 return redirect(reverse('dorm_detective_app:sign_up'))
+#             else:
+#                 return HttpResponse("Your Dorm Detective account is disabled.")
+#         else:
+#             print("Invalid login details: {0}, {1}".format(username, password))
+#             return HttpResponse("Invalid login details supplied.")
+#     else:
+#         return render(request, 'dorm_detective_app/login.html', {})
+    
+
+# @login_required
+# def user_logout(request):
+#     logout(request)
+#     return redirect(reverse('dorm_detective_app:login'))
+>>>>>>> ece996c9f67d92d38f7d5a4af61cb41618e6d125

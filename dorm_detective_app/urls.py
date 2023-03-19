@@ -1,7 +1,10 @@
 from django.urls import path
 from dorm_detective_app import views
+from registration.backends.default.views import RegistrationView
 
-app_name = 'dorm_detective_app'
+from dorm_detective_app.views import CustomRegistrationView
+
+app_name = 'dorm_detective'
 
 urlpatterns = [
 	path('', views.home, name='home'),
@@ -18,4 +21,14 @@ urlpatterns = [
 	path('login/my_account/my_reviews/', views.my_reviews, name='my_reviews'),
 	path('logout/', views.user_logout, name='logout'),
 	path('restricted/', views.restricted, name='restricted'),
+    path('about/', views.about, name="about"),
+    path('accounts/register/', CustomRegistrationView.as_view(), name='django_registration_register'),
+
+    path('universities/university_of_glasgow/', views.glasgow, name="glasgow"),
+    path('glasgow/finnieston_avenue/', views.finnieston_avenue, name="finnieston_avenue"),
+    path('universities', views.universities, name="universities")
+    # path('sign_up/', views.sign_up, name='sign_up'),
+    # path('login/', views.user_login, name='login'),
+    # path('logout/', views.user_logout, name='logout'),
+    
 ]
