@@ -65,16 +65,17 @@ def universities(request):
 def university_name(request, university_slug):
     try:
         university = University.objects.get(slug=university_slug)
-        accommodations = Accommodation.objects.get(university=university)
+        accommodations = Accommodation.objects.filter(university=university)
     except University.DoesNotExist:
         university = None
+        accommodations = None
 
     if university is None:
         return redirect('/dorm_detective/')
 
 
     context = {"university" : university, "accommodations" : accommodations}
-    template_name = 'dorm_detective_app/university_name.html'
+    template_name = 'dorm_detective_app/university.html'
     return render(request, template_name, context)
 
 

@@ -7,9 +7,9 @@ from dorm_detective_app.views import CustomRegistrationView
 app_name = 'dorm_detective'
 
 urlpatterns = [
-	path('', views.index, name='home'),
+	path('', views.index, name='index'),
 	path('universities/', views.universities, name='universities'),
-	path('universities/<str:university_name>/', views.university_name, name='university_name'),
+	path('universities/<str:university_slug>/', views.university_name, name='university_name'),
 	path('universities/<str:university_name>/<str:accomodation_name>/', views.accommodation_name, name='accommodation_name'),
 	path('about_us/', views.about_us, name='about_us'),
 	path('FAQ/', views.faq, name='faq'),

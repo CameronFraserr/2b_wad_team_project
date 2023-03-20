@@ -44,15 +44,15 @@
                 </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-                {% for a in accomodations %}
+                {% for a in accommodations %}
                     <div class="col">
-                        <a href="{% url 'dorm_detective:{{ a.name }}' %}"
+                        <a href="{% url 'dorm_detective:universities' %}"
                            style="text-decoration: none; color: black">
                             <div class="card h-100">
                                 <img src="{{ MEDIA_URL }}finnieston_avenue.jpg" class="card-img-top">
                                 <div class="card-body">
-                                    <h5 class="card-title"><b>Finnieston Avenue</b></h5>
-                                    <p class="card-text">Amazing</p>
+                                    <h5 class="card-title"><b>{{ a.name }}</b></h5>
+                                    <p class="card-text">{{ a.description }}</p>
                                 </div>
                             </div>
                         </a>
