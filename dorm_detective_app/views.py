@@ -65,7 +65,8 @@ def my_reviews(request):
 
 def universities(request):
     universities = University.objects.all()
-    context = {"universities": universities}
+    accommodations = Accommodation.objects.all()
+    context = {"universities": universities, "accommodations" : accommodations}
     template_name = 'dorm_detective_app/universities.html'
     return render(request, template_name, context)
 
