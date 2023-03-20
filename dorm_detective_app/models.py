@@ -104,6 +104,7 @@ class Accommodation(models.Model):
         ],
         default=0
     )
+    picture = models.ImageField(upload_to='accommodation_images', blank=True, null=True)
 
     class Meta:
         unique_together = ('university', 'name')
@@ -112,11 +113,11 @@ class Accommodation(models.Model):
         return self.university.__str__() + " " + self.name
 
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     current_student = models.BooleanField(default=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.user.username
