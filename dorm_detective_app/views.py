@@ -19,50 +19,60 @@ class CustomRegistrationView(RegistrationView):
 
 
 def index(request):
-    context = {}
+    universities = University.objects.all()
+    universities_supported = universities.count()
+    context = {"universities" : universities, "universities_supported" : universities_supported}
     template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
 
 def about_us(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/about.html'
     return render(request, template_name, context)
 
 
 def contact_us(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/contact_us.html'
     return render(request, template_name, context)
 
 
 def faq(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/faq.html'
     return render(request, template_name, context)
 
 
 @login_required
 def my_account(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 
 
 @login_required
 def my_reviews(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/my_reviews.html'
     return render(request, template_name, context)
 
 
 def universities(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/universities.html'
     return render(request, template_name, context)
 
 
-def university_name(request, university_slug):
+def university(request, university_slug):
+    universities = University.objects.all()
+
     try:
         university = University.objects.get(slug=university_slug)
         accommodations = Accommodation.objects.filter(university=university)
@@ -73,14 +83,14 @@ def university_name(request, university_slug):
     if university is None:
         return redirect('/dorm_detective/')
 
-
-    context = {"university" : university, "accommodations" : accommodations}
+    context = {"universities": universities, "university" : university, "accommodations" : accommodations}
     template_name = 'dorm_detective_app/university.html'
     return render(request, template_name, context)
 
 
 def accommodation_name(request):
-    context = {}
+    universities = University.objects.all()
+    context = {"universities": universities}
     template_name = 'dorm_detective_app/accommodation_name.html'
     return render(request, template_name, context)
 

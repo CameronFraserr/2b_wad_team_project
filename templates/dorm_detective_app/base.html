@@ -28,9 +28,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#", role="button" data-bs-toggle="dropdown">Universities</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'dorm_detective:glasgow' %}">University of Glasgow</a></li>
-                        <li><a class="dropdown-item" href="#">University of Strathclyde</a></li>
-                        <li><a class="dropdown-item" href="#">Glasgow Caledonian University</a></li>
+                        {% for u in universities %}
+                            <li><a class="dropdown-item" href="{% url 'dorm_detective:university' u.slug %}">{{ u.name }}</a></li>
+                        {% endfor %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'dorm_detective:universities' %}">All Universities</a></li>
                     </ul>
