@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from dorm_detective_app.models import UserProfile
+from dorm_detective_app.models import *
 from datetime import datetime
 from registration.backends.default.views import RegistrationView
 
@@ -62,8 +62,16 @@ def universities(request):
     return render(request, template_name, context)
 
 
-def university_name(request):
-    context = {}
+def university_name(request, university_slug):
+    try:
+        university = University.objects.get(slug=university_slug)
+    except University.DoesNotExist:
+        university = None
+
+    if university is None:
+        return redirect('/dorm_detective/')
+
+    context = {"university" : university}
     template_name = 'dorm_detective_app/university_name.html'
     return render(request, template_name, context)
 
