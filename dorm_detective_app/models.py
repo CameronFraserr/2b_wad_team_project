@@ -115,7 +115,7 @@ class Accommodation(models.Model):
         unique_together = ('university', 'name')
 
     def __str__(self):
-        return self.university.__str__() + " " + self.name
+        return self.university.__str__() + " - " + self.name
 
 
 class UserProfile(models.Model):
