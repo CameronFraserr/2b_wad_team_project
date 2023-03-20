@@ -30,7 +30,7 @@ class University(models.Model):
     description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
     picture = models.ImageField(upload_to='university_images', blank=True, null=True)
     website = models.URLField(blank=True)
-    slug = models.SlugField(unique=True, default="a")
+    slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -105,6 +105,11 @@ class Accommodation(models.Model):
         default=0
     )
     picture = models.ImageField(upload_to='accommodation_images', blank=True, null=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Accommodation, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ('university', 'name')
