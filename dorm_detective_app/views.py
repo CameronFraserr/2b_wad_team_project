@@ -89,10 +89,21 @@ def university(request, university_slug):
     return render(request, template_name, context)
 
 
-def accommodation_name(request):
+def accommodation(request, university_slug, accommodation_slug):
     universities = University.objects.all()
-    context = {"universities": universities}
-    template_name = 'dorm_detective_app/accommodation_name.html'
+
+    try:
+        accommodation = Accommodation.objects.get(slug=accommodation_slug)
+        university = accommodation.university
+        reviews = Review.objects.filter(accommodation=accommodation)
+    except Accommodation.DoesNotExist:
+        accommodation = None
+        university = None
+    except Review.DoesNotExist:
+        reviews = None
+
+    context = {"universities": universities, "accommodation" : accommodation, "university" : university, "reviews" : reviews}
+    template_name = 'dorm_detective_app/accommodation.html'
     return render(request, template_name, context)
 
 

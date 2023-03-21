@@ -24,15 +24,17 @@
                             <h5 class="card-title"><b>{{ u.name }}</b></h5>
                             <p class="card-text">{{ u.synopsis }}</p>
                         </div>
+                        {% if accommodations %}
                         {% for a in accommodations %}
                             {% if a.university == u %}
                                 <ul class="list-group list-group-flush">
                                     <div class="list-group-item">
-                                        <a href="{% url 'dorm_detective:accommodation_name' a.slug %}">{{ a.name }}</a>
+                                        <a href="{% url 'dorm_detective:accommodation' u.slug a.slug %}">{{ a.name }}</a>
                                     </div>
                                 </ul>
                             {% endif %}
                         {% endfor %}
+                        {% endif %}
                         <div class="card-footer">
                             <a href="{{ u.website }}" target="_blank" class="card-link">University Website</a>
                         </div>

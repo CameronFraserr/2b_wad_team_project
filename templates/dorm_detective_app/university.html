@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row mb-3">
             <div class="col-lg-4">
-                <img class="w-100 h-100" src="{{ MEDIA_URL }}{% if university.picture %}{{ university.picture }}{% endif %}" alt="university picture">
+                <img class="w-100 h-100" src="{% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}" alt="university picture">
             </div>
             <div class="col-lg-8">
                 <div class="d-flex align-items-center justify-content-center">
@@ -21,8 +21,10 @@
                 </div>
                 <div class="about-content d-flex align-items-center justify-content-center">
                     <p class="text-center">
-                        {% if university.name %}
+                        {% if university.description %}
                             {{ university.description }}
+                        {% else %}
+                            No description yet.
                         {% endif %}
                     </p>
                 </div>
@@ -46,10 +48,9 @@
 
                 {% for a in accommodations %}
                     <div class="col">
-                        <a href="{% url 'dorm_detective:universities' %}"
-                           style="text-decoration: none; color: black">
+                        <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"style="text-decoration: none; color: black">
                             <div class="card h-100">
-                                <img src="{{ MEDIA_URL }}finnieston_avenue.jpg" class="card-img-top">
+                                <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}" class="card-img-top">
                                 <div class="card-body">
                                     <h5 class="card-title"><b>{{ a.name }}</b></h5>
                                     <p class="card-text">{{ a.description }}</p>

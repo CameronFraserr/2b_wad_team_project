@@ -104,6 +104,7 @@ class Accommodation(models.Model):
         ],
         default=0
     )
+    slug = models.SlugField(unique=True)
 
     class Meta:
         unique_together = ('university', 'name')
