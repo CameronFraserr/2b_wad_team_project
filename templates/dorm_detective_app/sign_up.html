@@ -1,27 +1,23 @@
-<!DOCTYPE html>
+{% extends 'dorm_detective_app/base.html' %}
 
-<html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>
-            Sign up
-        </title>
-    </head>
-    <body>
-        <div>
-            <h1>Register</h1>
-            {% if registered %}
-                <p>Thanks for registering! You are now logged in.</p>
-            {% else %}
-            <form id="user_form" method="post" action="{% url 'dorm_detective_app:sign_up' %}" enctype="multipart/form-data">
+{% block title_block %}
+    Sign Up
+{% endblock title_block %}
+
+{% block content %}
+    <div class="justify-content-center mx-auto col-md-8">
+        <h2 class="text-center mb-4 pb-2 text-primary fw-bold">Sign Up</h2>
+        {% if registered %}
+            <p>Thanks for registering! You are now logged in.</p>
+        {% else %}
+            <form id="user_form" method="post" action="{% url 'dorm_detective:sign_up' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                
+
                 {{ user_form.as_p }}
                 {{ profile_form.as_p }}
 
-                <input type="submit" name="submit" value="Register" />
+                <input type="submit" name="submit" value="Register"/>
             </form>
-            {% endif %}
-        </div>
-    </body>
-</html>
+        {% endif %}
+    </div>
+{% endblock %}

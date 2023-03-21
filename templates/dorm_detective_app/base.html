@@ -22,15 +22,15 @@
     <nav class="navbar navbar-expand-sm bg-primary navbar-light fixed-top">
         <div class="container-fluid">
             <ul class="navbar-nav flex-grow-1 justify-content-center nav-fill align-items-center">
-                <a class="navbar-brand text-light" href="{% url 'dorm_detective:home' %}">
+                <a class="navbar-brand text-light" href="{% url 'dorm_detective:index' %}">
                     <img src="{% static 'images/dd_logo.png' %}" alt="Dorm Detective Logo" height="65px;" width="75px;">
                 </a>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#", role="button" data-bs-toggle="dropdown">Universities</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'dorm_detective:glasgow' %}">University of Glasgow</a></li>
-                        <li><a class="dropdown-item" href="#">University of Strathclyde</a></li>
-                        <li><a class="dropdown-item" href="#">Glasgow Caledonian University</a></li>
+                        {% for u in universities %}
+                            <li><a class="dropdown-item" href="{% url 'dorm_detective:university' u.slug %}">{{ u.name }}</a></li>
+                        {% endfor %}
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{% url 'dorm_detective:universities' %}">All Universities</a></li>
                     </ul>
@@ -39,13 +39,13 @@
                     <a class="nav-link text-light" href="{% url 'dorm_detective:about' %}">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">FAQs</a>
+                    <a class="nav-link text-light" href="{% url 'dorm_detective:faq' %}">FAQs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Contact Us</a>
+                    <a class="nav-link text-light" href="{% url 'dorm_detective:contact_us' %}">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">Login/Sign Up</a>
+                    <a class="nav-link text-light" href="{% url 'dorm_detective:sign_up' %}">Login/Sign Up</a>
                 </li>
             </ul>
         </div>
