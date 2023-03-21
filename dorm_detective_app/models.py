@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 class University(models.Model):
     NAME_MAX_LENGTH = 128
     DESCRIPTION_MAX_LENGTH = 2048
+    SYNOPSIS_MAX_LENGTH = 1024
 
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     latitude = models.DecimalField(
@@ -30,6 +31,7 @@ class University(models.Model):
     description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
     picture = models.ImageField(upload_to='university_images', blank=True, null=True)
     website = models.URLField(blank=True)
+    synopsis = models.CharField(max_length=SYNOPSIS_MAX_LENGTH, default="Synopsis")
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
