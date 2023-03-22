@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.template.defaultfilters import slugify
 
 
 class University(models.Model):
@@ -29,6 +30,11 @@ class University(models.Model):
     description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH, default="Description")
     picture = models.ImageField(upload_to='university_images', blank=True, null=True)
     website = models.URLField(blank=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(University, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Universities'
@@ -98,19 +104,25 @@ class Accommodation(models.Model):
         ],
         default=0
     )
+    picture = models.ImageField(upload_to='accommodation_images', blank=True, null=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Accommodation, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = ('university', 'name')
 
     def __str__(self):
-        return self.university.__str__() + " " + self.name
-
+        return self.university.__str__() + " - " + self.name
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     current_student = models.BooleanField(default=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.user.username
