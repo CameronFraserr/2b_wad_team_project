@@ -324,3 +324,15 @@ def finnieston_avenue(request):
 # def user_logout(request):
 #     logout(request)
 #     return redirect(reverse('dorm_detective_app:login'))
+
+def add_like(request):
+    if request.method == "POST":
+        pk=request.POST["pk"]
+
+        try:
+            review = Review.objects.get(pk=pk)
+            review.likes += 1
+            review.save()
+        except Review.DoesNotExist:
+            pass
+    return HttpResponse()
