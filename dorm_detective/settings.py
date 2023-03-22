@@ -136,7 +136,7 @@ REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
 
 # The URL that Django redirects users to after logging in
-LOGIN_REDIRECT_URL = '/dorm_detective_app/'
+LOGIN_REDIRECT_URL = '/dorm_detective/'
 
 # The page users are directed to if they are not logged in
 LOGIN_URL = 'auth_login'
