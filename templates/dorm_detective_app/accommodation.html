@@ -21,24 +21,27 @@
                     <img class="w-100 h-100" src="
 
 
+
                             {% if accommodation.picture %}{{ MEDIA_URL }}{{ accommodation.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
                          alt="accommodation picture">
                 </div>
                 <div class="row justify-content-center">
-                    {% if accommodation %}
-                        <h6 class="text-center"><b>Average Weekly Rent:</b> £{{ accommodation.rent_min }} -
-                            £{{ accommodation.rent_max }}</h6>
-                        <h6 class="text-center"><b>Average Rating:</b> {{ avg_rating }}</h6>
-                        <h6 class="text-center"><b>Total Reviews:</b> {{ rating_no }}</h6>
-                    {% endif %}
+                    <div class="col-lg-8 shadow p-3 bg-body rounded">
+                        {% if accommodation %}
+                            <h6 class="text-center"><b>Average Weekly Rent:</b> £{{ accommodation.rent_min }} -
+                                £{{ accommodation.rent_max }}</h6>
+                            <h6 class="text-center"><b>Average Rating:</b> {{ avg_rating }}</h6>
+                            <h6 class="text-center"><b>Total Reviews:</b> {{ rating_no }}</h6>
+                        {% endif %}
+                    </div>
                 </div>
 
             </div>
             <div class="col-lg-8">
-                <div class="d-flex align-items-center justify-content-center">
-                    <h1><b>{% if accommodation.name %}{{ accommodation.name }}{% endif %}</b></h1>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <h1 class="text-primary"><b>{% if accommodation.name %}{{ accommodation.name }}{% endif %}</b></h1>
                 </div>
-                <div class="about-content d-flex align-items-center justify-content-center">
+                <div class="about-content d-flex align-items-center justify-content-center shadow p-3 bg-body rounded">
                     <p class="text-center">
                         {% if accommodation.name %}
                             {{ accommodation.description }}
@@ -52,7 +55,7 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="row align-items-center justify-content-center">
-                    <h2 class="text-center"><b>Location</b></h2>
+                    <h2 class="text-center text-primary"><b>Location</b></h2>
                 </div>
                 <div class="row">
                     <div>
@@ -67,7 +70,7 @@
                     </div>
                 {% endif %}
                 <div class="row">
-                    <h2 class="text-center"><b>Reviews</b></h2>
+                    <h2 class="text-center text-primary"><b>Reviews</b></h2>
                     <div class="card-body">
                         {% for r in reviews %}
                             <div class="card mb-3">
