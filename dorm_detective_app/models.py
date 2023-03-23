@@ -34,6 +34,7 @@ class University(models.Model):
     website = models.URLField(blank=True)
     synopsis = models.CharField(max_length=SYNOPSIS_MAX_LENGTH, default="Synopsis")
     slug = models.SlugField(unique=True)
+    email_domain = models.CharField(max_length=128, default="example.com")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -44,6 +45,7 @@ class University(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class Accommodation(models.Model):
