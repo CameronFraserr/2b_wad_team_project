@@ -18,10 +18,12 @@ def populate():
         {'username': "NOTABOT",
          'password': "123asd1vgfA",
          'student': True,
+         'image_path': POPULATION_RESOURCES + 'person1.jfif',
          },
         {'username': "CHATGPT",
          'password': "NEW_SKYNET123",
          'student': True,
+         'image_path': POPULATION_RESOURCES + 'gptchat.png',
          }
     ]
 
@@ -163,7 +165,7 @@ def populate():
     user_profs = []
 
     for user in users:
-        user_profs.append(add_user(user['username'], user['password'], user['student']))
+        user_profs.append(add_user(user['username'], user['password'], user['student'], user['image_path']))
 
     for university, uni_data in universities.items():
         uni = add_university(university, uni_data['latitude'], uni_data['longitude'], uni_data['description'],
@@ -208,10 +210,11 @@ def add_accommodation(uni, name, description, latitude, longitude, rent_max, ren
     return accom
 
 
-def add_user(username, password, is_student):
+def add_user(username, password, is_student, img):
     user = User.objects.get_or_create(username=username, password=password)[0]
     user.save()
     user_profile = UserProfile.objects.get_or_create(user=user, current_student=is_student)[0]
+    user_profile.picture = img
     user_profile.save()
 
     return user_profile
