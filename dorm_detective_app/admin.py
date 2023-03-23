@@ -4,9 +4,14 @@ from dorm_detective_app.models import University, Accommodation, UserProfile, Re
 
 class UniversityAdmin(admin.ModelAdmin):
     list_display = ('name', 'latitude', 'longitude', 'description', 'website')
+    prepopulated_fields = {'slug': ('name',)}
+
+
+class AccommodationAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
 
 
 admin.site.register(University, UniversityAdmin)
-admin.site.register(Accommodation)
+admin.site.register(Accommodation, AccommodationAdmin)
 admin.site.register(Review)
 admin.site.register(UserProfile)

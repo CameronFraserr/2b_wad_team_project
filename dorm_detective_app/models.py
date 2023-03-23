@@ -4,6 +4,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 import django
 
+
 class University(models.Model):
     NAME_MAX_LENGTH = 128
     DESCRIPTION_MAX_LENGTH = 2048
