@@ -51,7 +51,7 @@
                 <li class="nav-item">
                     <a class="navbar-brand text-light" href="{% url 'dorm_detective:my_account' user.id %}">
                         My Account
-                        <img src="{{ MEDIA_URL }}/profile_pictures/{{ user.picture }}" class="rounded float-right">
+                        <img src="{{ MEDIA_URL }}/profile_pictures/{{ user_profile.picture }}" class="rounded float-right">
                     </a>
                 </li>
             {% else %}
