@@ -62,9 +62,6 @@ class CustomRegistrationForm(RegistrationForm):
     def save(self, commit=True):
         user = super().save(commit=commit)
         if commit:
-            UserProfile.objects.create(user=user, current_student=self.cleaned_data['current_student'])
+            default_profile_pic_url = '/static/images/default_pp.jpg'
+            UserProfile.objects.create(user=user, current_student=self.cleaned_data['current_student'], picture=default_profile_pic_url)
         return user
-
-
-
-
