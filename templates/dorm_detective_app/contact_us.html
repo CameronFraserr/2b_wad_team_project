@@ -1,5 +1,5 @@
 {% extends 'dorm_detective_app/base.html' %}
-{% load leaflet_tags %}
+{#{% load leaflet_tags %} #}
 
 {% block content %}
     <div class="d-flex align-items-center justify-content-center">
@@ -22,12 +22,12 @@
             <br>Feel free to pay us a visit too. Find us at the location shown on the right :) 
         </div>
         <div class="col-lg-6">
-            {% leaflet_map "map" %}
+            {#{% leaflet_map "map" %}#}
         </div>
 
     </div>
 
-    <script>
+    <!-- <script>
         const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
         });
@@ -38,5 +38,5 @@
 
         const marker = new L.Marker([55.871148, -4.288634]);
         marker.addTo(map)
-    </script>
+    </script> -->
 {% endblock content %}
