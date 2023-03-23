@@ -15,8 +15,6 @@ urlpatterns = [
 	path('FAQ/', views.faq, name='faq'),
 	path('contact_us/', views.contact_us, name='contact_us'),
 	path('account/<int:user_id>/', views.my_account, name='my_account'),
-	path('logout/', views.user_logout, name='logout'),
-	path('restricted/', views.restricted, name='restricted'),
 	path('add-like/', views.add_like, name="add_like"),
     path('', include('registration.backends.simple.urls')) 
     
