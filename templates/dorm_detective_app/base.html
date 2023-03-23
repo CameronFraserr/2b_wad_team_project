@@ -48,6 +48,9 @@
             {% if user.is_authenticated %}
                 <li class="nav-item">
 {#                    <a class="nav-link text-light" href="{% url 'dorm_detective:my_account' user %}">My Account</a>}#}
+                    <a class="navbar-brand" href="{% url 'dorm_detective:my_account' user %}">
+                        <img src="{{ MEDIA_URL }}/profile_pictures/{{ user.picture }}" class="rounded float-right">
+                    </a>
                 </li>
             {% else %}
                 <li class="nav-item">
