@@ -1,6 +1,6 @@
 {% extends 'dorm_detective_app/base.html' %}
 {% load staticfiles %}
-{#{% load django_google_maps %}#}
+{% load leaflet_tags %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
@@ -15,6 +15,11 @@
         <div class="row mb-3">
             <div class="col-lg-4">
                 <img class="w-100 h-100" src="
+
+
+
+
+
                         {% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}"
                      alt="university picture">
             </div>
@@ -39,11 +44,9 @@
                     <h2 class="text-center"><b>Location</b></h2>
                 </div>
                 <div class="row">
-                    <form method="POST" action="">
-                        {% csrf_token %}
-                        {{ form.media }}
-                        {{ form.as_p }}
-                    </form>
+                    <div>
+                        {% leaflet_map "map" %}
+                    </div>
                 </div>
 
             </div>
@@ -52,14 +55,12 @@
                     <h2 class="text-center"><b>Accommodations</b></h2>
                 </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-
                     {% for a in accommodations %}
                         <div class="col">
                             <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"
                                style="text-decoration: none; color: black">
                                 <div class="card h-100">
-                                    <img src="
-                                            {% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
+                                    <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
                                          class="card-img-top">
                                     <div class="card-body">
                                         <h5 class="card-title"><b>{{ a.name }}</b></h5>
@@ -74,5 +75,18 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
+        });
+
+        const map = L.map('map', {
+            layers: [osm_map]
+        }).setView([{{ university.latitude }}, {{ university.longitude }}], 12);
+
+        const marker = new L.Marker([{{ university.latitude }}, {{ university.longitude }}]);
+        marker.addTo(map)
+    </script>
 
 {% endblock %}

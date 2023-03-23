@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'dorm_detective_app',
     'registration',
     'bootstrap5',
-    'mapwidgets'
+    'leaflet'
 ]
 
 MIDDLEWARE = [
@@ -153,5 +153,3 @@ MEDIAFILES_DIRS = [
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
-# Google Maps
-# GOOGLE_MAPS_API_KEY = os.environ['gmkey']
