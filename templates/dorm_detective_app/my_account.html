@@ -8,7 +8,7 @@
                 <div class="col-lg-4">
                     <div class="card h-100">
                         <div class="card-body text-center">
-                            <img src="{% if user.picture %}{{ MEDIA_URL }}/profile_pictures/{{ user.picture }}{% else %}{{ STATIC_URL }}/images/default_pp.png{% endif %}" alt="profile picture"
+                            <img src="{% if user_profile.picture %}{{ MEDIA_URL }}/profile_pictures/{{ user_profile.picture }}{% else %}{{ STATIC_URL }}/images/default_pp.png{% endif %}" alt="profile picture"
                                  class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3">{{ user.username }}</h5>
                             {% if user_profile.current_student %}
@@ -39,8 +39,18 @@
                                     <p class="text-muted mb-0">{{ user.email }}</p>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Last Seen</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{ user.last_login }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <a href="{% url 'dorm_detective:delete_account' user.id %}"><button type="button" class="btn btn-danger" >Delete Account</button></a>
                 </div>
             </div>
             <div class="row">

@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from dorm_detective_app.models import *
 from datetime import datetime
+from django.contrib.auth import logout
 
 def index(request):
     universities = University.objects.all()
@@ -51,6 +52,18 @@ def my_reviews(request):
     context = {"universities": universities}
     template_name = 'dorm_detective_app/my_reviews.html'
     return render(request, template_name, context)
+
+@login_required
+def delete_account(request, user_id):
+    logout(request)
+
+    user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.get(user=user)
+
+    user_profile.delete()
+    user.delete()
+
+    return redirect("/dorm_detective/")
 
 
 def universities(request):
