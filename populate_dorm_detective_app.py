@@ -30,6 +30,7 @@ def populate():
          'description': "AMAZING PLACE! Will surely come back there next year.",
          'likes': 4,
          'rating': 5,
+         'image_path': POPULATION_RESOURCES + 'murano_rev1.jpg',
          },
     ]
 
@@ -38,11 +39,13 @@ def populate():
          'description': "Very close to the University, but that's about it.",
          'likes': 2,
          'rating': 4,
+         'image_path': POPULATION_RESOURCES + 'student_apart_rev1.jfif',
          },
         {'title': "Crap!",
          'description': "Toilets were very dirty.",
          'likes': 0,
          'rating': 1,
+         'image_path': POPULATION_RESOURCES + 'student_apart_rev1.jpg',
          },
     ]
 
@@ -51,6 +54,7 @@ def populate():
          'description': "This place doesn't even exist anymore!? Please take it down, it's only confusing people!",
          'likes': 1,
          'rating': 1,
+         'image_path': POPULATION_RESOURCES + 'finn_rev1.jpg',
          },
     ]
 
@@ -88,7 +92,7 @@ def populate():
          'rent_max': 150.23,
          'rent_min': 113.23,
          'revs': finn_avenue_revs,
-         'image_path': POPULATION_RESOURCES + 'finniestion_avenue.jpg'
+         'image_path': POPULATION_RESOURCES + 'finnieston_avenue.jpg'
          },
     ]
 
@@ -169,7 +173,7 @@ def populate():
                                       a['rent_min'], a['image_path'])
             for rev in a['revs']:
                 add_review(accom, rev['title'], rev['description'], rev['likes'], rev['rating'],
-                           random.choice(user_profs))
+                           random.choice(user_profs), rev['image_path'])
 
     for uni in University.objects.all():
         print(f'- {uni}')
@@ -213,13 +217,14 @@ def add_user(username, password, is_student):
     return user_profile
 
 
-def add_review(accommodation, title, description, likes, rating, user):
+def add_review(accommodation, title, description, likes, rating, user, img):
     rev = Review.objects.get_or_create(accommodation=accommodation, user=user)[0]
     rev.title = title
     rev.description = description
     rev.likes = likes
     rev.rating = rating
     rev.datetime = timezone.now()
+    rev.picture = img
     rev.save()
 
     return rev
