@@ -46,8 +46,25 @@ class CustomRegistrationForm(RegistrationForm):
         label="I am a student",
     )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        current_student = cleaned_data.get('current_student')
+
+        if email and current_student:
+            domain = email.split('@')[1]
+            allowed_domains = ["student.gla.ac.uk",
+                               "uni.strath.ac.uk",
+                               "caledonian.ac.uk"]  # add more domains as needed
+            if domain not in allowed_domains:
+                self.add_error('email', "Please use your university e-mail address.")
+
     def save(self, commit=True):
         user = super().save(commit=commit)
         if commit:
             UserProfile.objects.create(user=user, current_student=self.cleaned_data['current_student'])
         return user
+
+
+
+
