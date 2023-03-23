@@ -3,6 +3,7 @@ import random
 import django
 import os
 from PIL import Image
+import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dorm_detective.settings')
 
@@ -210,6 +211,7 @@ def add_review(accommodation, title, description, likes, rating, user):
     rev.description = description
     rev.likes = likes
     rev.rating = rating
+    rev.datetime = django.utils.timezone.now()
     rev.save()
 
     return rev
