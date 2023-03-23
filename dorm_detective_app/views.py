@@ -81,14 +81,6 @@ def my_account(request, user_id):
 
 
 @login_required
-def my_reviews(request):
-    universities = University.objects.all()
-    context = {"universities": universities}
-    template_name = 'dorm_detective_app/my_reviews.html'
-    return render(request, template_name, context)
-
-
-@login_required
 def delete_account(request, user_id):
     logout(request)
 
@@ -198,3 +190,9 @@ def add_like(request):
         except Review.DoesNotExist:
             pass
     return HttpResponse()
+
+@login_required
+def logout_account(request):
+    logout(request)
+
+    return redirect("/dorm_detective/")

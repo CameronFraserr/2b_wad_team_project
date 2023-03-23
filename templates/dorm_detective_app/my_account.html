@@ -50,7 +50,8 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{% url 'dorm_detective:delete_account' user.id %}"><button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Are you sure you want to do this?">Delete Account</button></a>
+                    <a href="{% url 'auth_logout' %}"><button type="button" class="btn btn-warning float-left">Logout</button></a>
+                    <a href="{% url 'dorm_detective:delete_account' user.id %}"><button type="button" class="btn btn-danger float-right" data-toggle="tooltip" data-placement="top" title="Are you sure you want to do this?">Delete Account</button></a>
                 </div>
             </div>
             <div class="row">
