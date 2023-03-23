@@ -16,7 +16,7 @@ def index(request):
     return render(request, template_name, context)
 
 
-def about_us(request):
+def about(request):
     universities = University.objects.all()
     context = {"universities": universities}
     template_name = 'dorm_detective_app/about.html'
@@ -137,11 +137,6 @@ def visitor_cookie_handler(request):
 
     # Update/set the visits cookie
     request.session['visits'] = visits
-
-
-def about(request):
-    response = render(request, 'dorm_detective_app/about.html')
-    return response
 
 def add_like(request):
     if request.method == "POST":
