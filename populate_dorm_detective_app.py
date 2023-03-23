@@ -18,10 +18,12 @@ def populate():
         {'username': "NOTABOT",
          'password': "123asd1vgfA",
          'student': True,
+         'image_path': POPULATION_RESOURCES + 'person1.jfif',
          },
         {'username': "CHATGPT",
          'password': "NEW_SKYNET123",
          'student': True,
+         'image_path': POPULATION_RESOURCES + 'gptchat.png',
          }
     ]
 
@@ -30,6 +32,7 @@ def populate():
          'description': "AMAZING PLACE! Will surely come back there next year.",
          'likes': 4,
          'rating': 5,
+         'image_path': POPULATION_RESOURCES + 'murano_rev1.jpg',
          },
     ]
 
@@ -38,11 +41,13 @@ def populate():
          'description': "Very close to the University, but that's about it.",
          'likes': 2,
          'rating': 4,
+         'image_path': POPULATION_RESOURCES + 'student_apart_rev1.jfif',
          },
         {'title': "Crap!",
          'description': "Toilets were very dirty.",
          'likes': 0,
          'rating': 1,
+         'image_path': POPULATION_RESOURCES + 'student_apart_rev1.jpg',
          },
     ]
 
@@ -51,6 +56,7 @@ def populate():
          'description': "This place doesn't even exist anymore!? Please take it down, it's only confusing people!",
          'likes': 1,
          'rating': 1,
+         'image_path': POPULATION_RESOURCES + 'finn_rev1.jpg',
          },
     ]
 
@@ -63,6 +69,7 @@ def populate():
          'rent_max': 144.83,
          'rent_min': 115.36,
          'revs': student_apart_revs,
+         'image_path': POPULATION_RESOURCES + 'student_apart.jpg'
          },
         {'name': 'Murano Street Student Village',
          'description': """Murano Street Student Village is our largest residence and provides self-catered accommodation 
@@ -73,6 +80,7 @@ def populate():
          'rent_max': 134.47,
          'rent_min': 134.47,
          'revs': murano_revs,
+         'image_path': POPULATION_RESOURCES + 'murano.jfif'
          }
     ]
 
@@ -86,6 +94,7 @@ def populate():
          'rent_max': 150.23,
          'rent_min': 113.23,
          'revs': finn_avenue_revs,
+         'image_path': POPULATION_RESOURCES + 'finnieston_avenue.jpg'
          },
     ]
 
@@ -99,7 +108,8 @@ def populate():
          'longitude': -4.248446,
          'rent_max': 160.23,
          'rent_min': 110.23,
-         'revs': []
+         'revs': [],
+         'image_path': POPULATION_RESOURCES + 'caledonian_court.jfif',
          },
     ]
 
@@ -137,7 +147,7 @@ def populate():
                             Glasgow, Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's 
                             second-oldest university.""",
             'accommodations': uofst_accommodations,
-            'image_path': ""
+            'image_path': POPULATION_RESOURCES + "strathclyde.jpg"
         },
         'Glasgow Caledonian University': {
             'latitude': 55.866883, 'longitude': -4.250399, 'website': 'https://www.gcu.ac.uk/',
@@ -148,24 +158,24 @@ def populate():
                             public university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
                             Glasgow and Glasgow Polytechnic.""",
             'accommodations': uofcal_accommodations,
-            'image_path': ""
+            'image_path': POPULATION_RESOURCES + "caledonian.jpg"
         },
     }
 
     user_profs = []
 
     for user in users:
-        user_profs.append(add_user(user['username'], user['password'], user['student']))
+        user_profs.append(add_user(user['username'], user['password'], user['student'], user['image_path']))
 
     for university, uni_data in universities.items():
         uni = add_university(university, uni_data['latitude'], uni_data['longitude'], uni_data['description'],
                              uni_data['website'], uni_data['synopsis'], uni_data['image_path'])
         for a in uni_data['accommodations']:
             accom = add_accommodation(uni, a['name'], a['description'], a['latitude'], a['longitude'], a['rent_max'],
-                                      a['rent_min'])
+                                      a['rent_min'], a['image_path'])
             for rev in a['revs']:
                 add_review(accom, rev['title'], rev['description'], rev['likes'], rev['rating'],
-                           random.choice(user_profs))
+                           random.choice(user_profs), rev['image_path'])
 
     for uni in University.objects.all():
         print(f'- {uni}')
@@ -187,34 +197,37 @@ def add_university(name, latitude, longitude, description, website, synopsis, im
     return uni
 
 
-def add_accommodation(uni, name, description, latitude, longitude, rent_max, rent_min):
+def add_accommodation(uni, name, description, latitude, longitude, rent_max, rent_min, img):
     accom = Accommodation.objects.get_or_create(university=uni, name=name)[0]
     accom.description = description
     accom.latitude = latitude
     accom.longitude = longitude
     accom.rent_max = rent_max
     accom.rent_min = rent_min
+    accom.picture = img
     accom.save()
 
     return accom
 
 
-def add_user(username, password, is_student):
+def add_user(username, password, is_student, img):
     user = User.objects.get_or_create(username=username, password=password)[0]
     user.save()
     user_profile = UserProfile.objects.get_or_create(user=user, current_student=is_student)[0]
+    user_profile.picture = img
     user_profile.save()
 
     return user_profile
 
 
-def add_review(accommodation, title, description, likes, rating, user):
+def add_review(accommodation, title, description, likes, rating, user, img):
     rev = Review.objects.get_or_create(accommodation=accommodation, user=user)[0]
     rev.title = title
     rev.description = description
     rev.likes = likes
     rev.rating = rating
     rev.datetime = timezone.now()
+    rev.picture = img
     rev.save()
 
     return rev
