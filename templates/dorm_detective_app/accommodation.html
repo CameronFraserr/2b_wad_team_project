@@ -106,7 +106,40 @@
                                         <div class="card-body">
                                             <h5 class="card-title">{{ r.title }}</h5>
                                             <p class="card-text">{{ r.description }}</p>
-                                            <p class="card-text text-muted">Rating: {{ r.rating }}</p>
+                                            <p class="card-text text-muted">
+                                                Rating:
+                                                {% if r.rating == 1 %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                {% elif r.rating == 2 %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                {% elif r.rating == 3 %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                {% elif r.rating == 4 %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star"></i>
+                                                {% elif r.rating == 5 %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                {% endif %}
+                                            </p>
                                             <p class="card-text">
                                                 <i class="fas fa-thumbs-up" onclick="addLike({{ r.pk }})"></i>
                                                 <span id="like-count-{{ r.pk }}">{{ r.likes }}</span>
