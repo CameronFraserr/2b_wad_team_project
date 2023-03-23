@@ -10,19 +10,27 @@ from django.contrib.auth import logout
 def index(request):
     universities = University.objects.all()
     universities_supported = universities.count()
+    students_no = User.objects.all().count()
 
     try:
         accommodations = Accommodation.objects.all()
 
         accommodations_ratings = {}
 
+        total_reviews = 0
+
+        total_likes = 0
+
         for accommodation in accommodations:
             rating_score = 0
             reviews = Review.objects.filter(accommodation=accommodation)
 
             if reviews.count() > 0:
+                total_reviews += reviews.count()
+
                 for review in reviews:
                     rating_score += review.rating
+                    total_likes += review.likes
 
                 rating_score / reviews.count()
 
@@ -32,9 +40,10 @@ def index(request):
 
     except Accommodation.DoesNotExist:
         highest_rated_accommodations = None
+        total_reviews = None
 
     context = {"universities": universities, "universities_supported": universities_supported,
-               "accommodations": highest_rated_accommodations}
+               "accommodations": highest_rated_accommodations, "total_reviews" : total_reviews, "students_no" : students_no, "total_likes" : total_likes}
     template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
