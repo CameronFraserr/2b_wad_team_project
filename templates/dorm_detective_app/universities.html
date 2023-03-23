@@ -19,7 +19,7 @@
             <div class="col">
                 <a href="{% url 'dorm_detective:university' u.slug %}" style="text-decoration: none; color: black">
                     <div class="card h-100">
-                        <img src="{{ MEDIA_URL }}{{ u.picture }}" class="card-img-top">
+                        <img src="{% if u.picture %}{{ MEDIA_URL }}/university_images/{{ u.picture }}{% else %}{{ STATIC_URL }}/images/uni_default.jpg{% endif %}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title"><b>{{ u.name }}</b></h5>
                             <p class="card-text">{{ u.synopsis }}</p>
@@ -42,88 +42,5 @@
                 </a>
             </div>
         {% endfor %}
-        <div class="col">
-            <a href="#" style="text-decoration: none; color: black">
-                <div class="card h-100">
-                    <img src="{{ MEDIA_URL }}strathclyde.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title"><b>University of Strathclyde</b></h5>
-                        <p class="card-text">The University of Strathclyde is a public research university located in
-                            Glasgow,
-                            Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's second-oldest
-                            university.</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <div class="list-group-item">
-                            <a href="#">Birkbeck Court</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">Garnett Hall</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">Chancellors Hall</a>
-                        </div>
-                    </ul>
-                    <div class="card-footer">
-                        <a href="https://www.strath.ac.uk/" target="_blank" class="card-link">University Website</a>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#" style="text-decoration: none; color: black">
-                <div class="card h-100">
-                    <img src="{{ MEDIA_URL }}caledonian.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title"><b>Glasgow Caledonian University</b></h5>
-                        <p class="card-text">Glasgow Caledonian University, informally GCU, Caledonian or Caley, is a
-                            public
-                            university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
-                            Glasgow and Glasgow Polytechnic.</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <div class="list-group-item">
-                            <a href="#">Caledonian Court</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">Dobbie's Point</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">Gallery Apartments</a>
-                        </div>
-                    </ul>
-                    <div class="card-footer">
-                        <a href="https://www.gcu.ac.uk/" target="_blank" class="card-link">University Website</a>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#" style="text-decoration: none; color: black">
-                <div class="card h-100">
-                    <img src="{{ MEDIA_URL }}rcs.jpg" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title"><b>Royal Conservatoire of Scotland</b></h5>
-                        <p class="card-text">The Royal Conservatoire of Scotland, formerly the Royal Scottish Academy of
-                            Music and Drama is a conservatoire of dance, drama, music, production, and film in Glasgow,
-                            Scotland. It is a member of the Federation of Drama Schools.</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <div class="list-group-item">
-                            <a href="#">Base Glasgow</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">Merchant City House</a>
-                        </div>
-                        <div class="list-group-item">
-                            <a href="#">George Square Studios</a>
-                        </div>
-                    </ul>
-                    <div class="card-footer">
-                        <a href="https://www.rcs.ac.uk/" target="_blank" class="card-link">University Website</a>
-                    </div>
-                </div>
-            </a>
-        </div>
     </div>
 {% endblock %}

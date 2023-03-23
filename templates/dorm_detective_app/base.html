@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% load staticfiles %}
+{% load leaflet_tags %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <html lang="en">
@@ -12,11 +13,12 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% leaflet_js %}
+    {% leaflet_css %}
     <link rel="icon" href="{% static 'images/dd_favicon.png' %}" type="image/png">
     <title>
         {% block title_block %} Dorm Detective {% endblock title_block %}
     </title>
-
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-primary navbar-light fixed-top">
