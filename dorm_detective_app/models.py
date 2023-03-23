@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.template.defaultfilters import slugify
-import django
+from django.utils import timezone
 
 
 class University(models.Model):
@@ -153,7 +153,7 @@ class Review(models.Model):
         ],
         default=5
     )
-    datetime = models.DateTimeField(blank=False, default=django.utils.timezone.now())
+    datetime = models.DateTimeField(blank=False, default=timezone.now())
 
     def __str__(self):
         return self.accommodation.__str__() + " " + self.title + " by user " + self.user.__str__()

@@ -2,8 +2,7 @@ import random
 
 import django
 import os
-from PIL import Image
-import django
+from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dorm_detective.settings')
 
@@ -13,18 +12,17 @@ from dorm_detective_app.models import University, Accommodation, UserProfile, Us
 
 
 def populate():
-    img = Image.open('glasgow.jpg')
-    # img.show()
+    POPULATION_RESOURCES = 'population_script_resources/'
 
     users = [
         {'username': "NOTABOT",
          'password': "123asd1vgfA",
          'student': True,
-        },
+         },
         {'username': "CHATGPT",
          'password': "NEW_SKYNET123",
          'student': True,
-        }
+         }
     ]
 
     murano_revs = [
@@ -128,6 +126,7 @@ def populate():
                         [O.S. 1450],[5] it is the fourth-oldest university in the English-speaking world and one of
                         Scotland's four ancient universities.""",
             'accommodations': uofg_accommodations,
+            'image_path': POPULATION_RESOURCES + 'glasgow.jpg',
         },
         'University of Strathclyde': {
             'latitude': 55.862194, 'longitude': -4.242386, 'website': 'https://www.strath.ac.uk/',
@@ -138,6 +137,7 @@ def populate():
                             Glasgow, Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's 
                             second-oldest university.""",
             'accommodations': uofst_accommodations,
+            'image_path': ""
         },
         'Glasgow Caledonian University': {
             'latitude': 55.866883, 'longitude': -4.250399, 'website': 'https://www.gcu.ac.uk/',
@@ -148,6 +148,7 @@ def populate():
                             public university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
                             Glasgow and Glasgow Polytechnic.""",
             'accommodations': uofcal_accommodations,
+            'image_path': ""
         },
     }
 
@@ -158,11 +159,13 @@ def populate():
 
     for university, uni_data in universities.items():
         uni = add_university(university, uni_data['latitude'], uni_data['longitude'], uni_data['description'],
-                             uni_data['website'], uni_data['synopsis'], img)
+                             uni_data['website'], uni_data['synopsis'], uni_data['image_path'])
         for a in uni_data['accommodations']:
-            accom = add_accommodation(uni, a['name'], a['description'], a['latitude'], a['longitude'], a['rent_max'], a['rent_min'])
+            accom = add_accommodation(uni, a['name'], a['description'], a['latitude'], a['longitude'], a['rent_max'],
+                                      a['rent_min'])
             for rev in a['revs']:
-                add_review(accom, rev['title'], rev['description'], rev['likes'], rev['rating'], random.choice(user_profs))
+                add_review(accom, rev['title'], rev['description'], rev['likes'], rev['rating'],
+                           random.choice(user_profs))
 
     for uni in University.objects.all():
         print(f'- {uni}')
@@ -178,7 +181,7 @@ def add_university(name, latitude, longitude, description, website, synopsis, im
     uni.description = description
     uni.website = website
     uni.synopsis = synopsis
-    uni.image = img
+    uni.picture = img
     uni.save()
 
     return uni
@@ -211,7 +214,7 @@ def add_review(accommodation, title, description, likes, rating, user):
     rev.description = description
     rev.likes = likes
     rev.rating = rating
-    rev.datetime = django.utils.timezone.now()
+    rev.datetime = timezone.now()
     rev.save()
 
     return rev
