@@ -6,10 +6,35 @@ from dorm_detective_app.models import *
 from datetime import datetime
 from django.contrib.auth import logout
 
+
 def index(request):
     universities = University.objects.all()
     universities_supported = universities.count()
-    context = {"universities" : universities, "universities_supported" : universities_supported}
+
+    try:
+        accommodations = Accommodation.objects.all()
+
+        accommodations_ratings = {}
+
+        for accommodation in accommodations:
+            rating_score = 0
+            reviews = Review.objects.filter(accommodation=accommodation)
+
+            if reviews.count() > 0:
+                for review in reviews:
+                    rating_score += review.rating
+
+                rating_score / reviews.count()
+
+                accommodations_ratings[accommodation] = rating_score
+
+        highest_rated_accommodations = sorted(accommodations_ratings, key=accommodations_ratings.get)[:4]
+
+    except Accommodation.DoesNotExist:
+        highest_rated_accommodations = None
+
+    context = {"universities": universities, "universities_supported": universities_supported,
+               "accommodations": highest_rated_accommodations}
     template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
@@ -41,7 +66,7 @@ def my_account(request, user_id):
     user_profile = UserProfile.objects.filter(user=user)[0]
     universities = University.objects.all()
     reviews = Review.objects.filter(user=user.userprofile)
-    context = {"universities": universities, "reviews": reviews, "user":user, "user_profile" : user_profile}
+    context = {"universities": universities, "reviews": reviews, "user": user, "user_profile": user_profile}
     template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 
@@ -52,6 +77,7 @@ def my_reviews(request):
     context = {"universities": universities}
     template_name = 'dorm_detective_app/my_reviews.html'
     return render(request, template_name, context)
+
 
 @login_required
 def delete_account(request, user_id):
@@ -69,7 +95,7 @@ def delete_account(request, user_id):
 def universities(request):
     universities = University.objects.all()
     accommodations = Accommodation.objects.all()
-    context = {"universities": universities, "accommodations" : accommodations}
+    context = {"universities": universities, "accommodations": accommodations}
     template_name = 'dorm_detective_app/universities.html'
     return render(request, template_name, context)
 
@@ -87,7 +113,7 @@ def university(request, university_slug):
     if university is None:
         return redirect('/dorm_detective/')
 
-    context = {"universities": universities, "university" : university, "accommodations" : accommodations}
+    context = {"universities": universities, "university": university, "accommodations": accommodations}
     template_name = 'dorm_detective_app/university.html'
     return render(request, template_name, context)
 
@@ -118,9 +144,11 @@ def accommodation(request, university_slug, accommodation_slug):
         avg_rating = None
         rating_no = None
 
-    context = {"universities": universities, "accommodation" : accommodation, "university" : university, "reviews" : reviews, "avg_rating" : avg_rating, "rating_no" : rating_no}
+    context = {"universities": universities, "accommodation": accommodation, "university": university,
+               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no}
     template_name = 'dorm_detective_app/accommodation.html'
     return render(request, template_name, context)
+
 
 # A helper method
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -148,9 +176,10 @@ def visitor_cookie_handler(request):
     # Update/set the visits cookie
     request.session['visits'] = visits
 
+
 def add_like(request):
     if request.method == "POST":
-        pk=request.POST["pk"]
+        pk = request.POST["pk"]
 
         try:
             review = Review.objects.get(pk=pk)
