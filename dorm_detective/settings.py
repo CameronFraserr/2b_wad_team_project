@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'dorm_detective_app',
     'registration',
     'bootstrap5',
+    'django_google_maps'
 ]
 
 MIDDLEWARE = [
