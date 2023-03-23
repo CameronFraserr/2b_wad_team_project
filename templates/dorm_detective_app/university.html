@@ -1,5 +1,6 @@
 {% extends 'dorm_detective_app/base.html' %}
 {% load staticfiles %}
+{#{% load django_google_maps %}#}
 
 {% block content %}
     <nav aria-label="breadcrumb">
@@ -13,7 +14,9 @@
     <div class="container-fluid">
         <div class="row mb-3">
             <div class="col-lg-4">
-                <img class="w-100 h-100" src="{% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}" alt="university picture">
+                <img class="w-100 h-100" src="
+                        {% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}"
+                     alt="university picture">
             </div>
             <div class="col-lg-8">
                 <div class="d-flex align-items-center justify-content-center">
@@ -36,7 +39,11 @@
                     <h2 class="text-center"><b>Location</b></h2>
                 </div>
                 <div class="row">
-                    <img class="w-100 h-100" src="{{ MEDIA_URL }}ggowmap.jpg" alt="map of university location">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form.as_p }}
+                    </form>
                 </div>
 
             </div>
@@ -46,19 +53,22 @@
                 </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
 
-                {% for a in accommodations %}
-                    <div class="col">
-                        <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"style="text-decoration: none; color: black">
-                            <div class="card h-100">
-                                <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title"><b>{{ a.name }}</b></h5>
-                                    <p class="card-text">{{ a.description }}</p>
+                    {% for a in accommodations %}
+                        <div class="col">
+                            <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"
+                               style="text-decoration: none; color: black">
+                                <div class="card h-100">
+                                    <img src="
+                                            {% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
+                                         class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><b>{{ a.name }}</b></h5>
+                                        <p class="card-text">{{ a.description }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+                            </a>
+                        </div>
+                    {% endfor %}
 
                 </div>
             </div>

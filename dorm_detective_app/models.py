@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.template.defaultfilters import slugify
+from django_google_maps import fields as map_fields
 
 
 class University(models.Model):
@@ -33,6 +34,10 @@ class University(models.Model):
     website = models.URLField(blank=True)
     synopsis = models.CharField(max_length=SYNOPSIS_MAX_LENGTH, default="Synopsis")
     slug = models.SlugField(unique=True)
+
+    # Map Testing
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

@@ -153,3 +153,5 @@ MEDIAFILES_DIRS = [
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+# Google Maps
+GOOGLE_MAPS_API_KEY = os.environ['gmkey']
