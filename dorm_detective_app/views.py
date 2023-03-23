@@ -1,10 +1,7 @@
 from django.shortcuts import render
-from dorm_detective_app.forms import *
 from django.http import HttpResponse
-from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 from dorm_detective_app.models import *
 from datetime import datetime
 
