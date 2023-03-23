@@ -1,5 +1,42 @@
 {% extends 'dorm_detective_app/base.html' %}
+{% load leaflet_tags %}
 
 {% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <h2 class="text-primary mb-4 fw-bold">Contact Us</h2>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <p>Interested in learning more about Dorm Detective? Or want to have a chat with our team about a question
+                you
+                have?
+            <p>Contact us today, and our specialist team will get back to you on your query ASAP!</p>
 
+            <p></p>
+            Email: <a href="mailto: lab2b@student.gla.ac.uk">lab2b@student.gla.ac.uk</a>
+            <br>Phone: <a href="tel: 0141 330 2000">0141 330 2000</a>
+            <br>
+            <br>Looking for a quicker answer? <br> Check out our <a href="{% url 'dorm_detective:faq' %}">FAQ's</a> to see
+            the answers to our most common questions!
+            <br>
+            <br>Feel free to pay us a visit too. Find us at the location shown on the right :) 
+        </div>
+        <div class="col-lg-6">
+            {% leaflet_map "map" %}
+        </div>
+
+    </div>
+
+    <script>
+        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
+        });
+
+        const map = L.map('map', {
+            layers: [osm_map]
+        }).setView([55.871148, -4.288634], 12);
+
+        const marker = new L.Marker([55.871148, -4.288634]);
+        marker.addTo(map)
+    </script>
 {% endblock content %}
