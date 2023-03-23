@@ -141,6 +141,7 @@
                                                     <i class="fas fa-star text-warning"></i>
                                                 {% endif %}
                                             </p>
+                                            <p class="card-text text-muted">Posted: {{ r.datetime }}</p>
                                             <p class="card-text">
                                                 <i class="fas fa-thumbs-up" onclick="addLike({{ r.pk }})"></i>
                                                 <span id="like-count-{{ r.pk }}">{{ r.likes }}</span>
