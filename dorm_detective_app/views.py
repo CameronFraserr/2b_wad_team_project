@@ -47,9 +47,10 @@ def faq(request):
 @login_required
 def my_account(request, user_id):
     user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.filter(user=user)[0]
     universities = University.objects.all()
     reviews = Review.objects.filter(user=user.userprofile)
-    context = {"universities": universities, "reviews": reviews, "user":user}
+    context = {"universities": universities, "reviews": reviews, "user":user, "user_profile" : user_profile}
     template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 
@@ -104,8 +105,6 @@ def accommodation(request, university_slug, accommodation_slug):
         rating_no = reviews.count()
         avg_rating /= rating_no
 
-
-        # accommodation_weekly_rent =
     except Accommodation.DoesNotExist:
         accommodation = None
         university = None
