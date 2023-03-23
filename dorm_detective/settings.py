@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'dorm_detective_app',
     'registration',
     'bootstrap5',
-    'django_google_maps'
+    'mapwidgets'
 ]
 
 MIDDLEWARE = [
@@ -154,4 +154,4 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 # Google Maps
-GOOGLE_MAPS_API_KEY = os.environ['gmkey']
+# GOOGLE_MAPS_API_KEY = os.environ['gmkey']
