@@ -63,6 +63,7 @@ def populate():
          'rent_max': 144.83,
          'rent_min': 115.36,
          'revs': student_apart_revs,
+         'image_path': POPULATION_RESOURCES + 'student_apart.jpg'
          },
         {'name': 'Murano Street Student Village',
          'description': """Murano Street Student Village is our largest residence and provides self-catered accommodation 
@@ -73,6 +74,7 @@ def populate():
          'rent_max': 134.47,
          'rent_min': 134.47,
          'revs': murano_revs,
+         'image_path': POPULATION_RESOURCES + 'murano.jfif'
          }
     ]
 
@@ -86,6 +88,7 @@ def populate():
          'rent_max': 150.23,
          'rent_min': 113.23,
          'revs': finn_avenue_revs,
+         'image_path': POPULATION_RESOURCES + 'finniestion_avenue.jpg'
          },
     ]
 
@@ -99,7 +102,8 @@ def populate():
          'longitude': -4.248446,
          'rent_max': 160.23,
          'rent_min': 110.23,
-         'revs': []
+         'revs': [],
+         'image_path': POPULATION_RESOURCES + 'caledonian_court.jfif',
          },
     ]
 
@@ -137,7 +141,7 @@ def populate():
                             Glasgow, Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's 
                             second-oldest university.""",
             'accommodations': uofst_accommodations,
-            'image_path': ""
+            'image_path': POPULATION_RESOURCES + "strathclyde.jpg"
         },
         'Glasgow Caledonian University': {
             'latitude': 55.866883, 'longitude': -4.250399, 'website': 'https://www.gcu.ac.uk/',
@@ -148,7 +152,7 @@ def populate():
                             public university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
                             Glasgow and Glasgow Polytechnic.""",
             'accommodations': uofcal_accommodations,
-            'image_path': ""
+            'image_path': POPULATION_RESOURCES + "caledonian.jpg"
         },
     }
 
@@ -162,7 +166,7 @@ def populate():
                              uni_data['website'], uni_data['synopsis'], uni_data['image_path'])
         for a in uni_data['accommodations']:
             accom = add_accommodation(uni, a['name'], a['description'], a['latitude'], a['longitude'], a['rent_max'],
-                                      a['rent_min'])
+                                      a['rent_min'], a['image_path'])
             for rev in a['revs']:
                 add_review(accom, rev['title'], rev['description'], rev['likes'], rev['rating'],
                            random.choice(user_profs))
@@ -187,13 +191,14 @@ def add_university(name, latitude, longitude, description, website, synopsis, im
     return uni
 
 
-def add_accommodation(uni, name, description, latitude, longitude, rent_max, rent_min):
+def add_accommodation(uni, name, description, latitude, longitude, rent_max, rent_min, img):
     accom = Accommodation.objects.get_or_create(university=uni, name=name)[0]
     accom.description = description
     accom.latitude = latitude
     accom.longitude = longitude
     accom.rent_max = rent_max
     accom.rent_min = rent_min
+    accom.picture = img
     accom.save()
 
     return accom
