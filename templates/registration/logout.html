@@ -1,7 +1,13 @@
-{% extends 'dorm_detective_app' %}
+{% extends 'dorm_detective_app/base.html' %}
 
 {% block content %}
-    <h1>Logged Out</h1>
+    <div class="d-flex flex-column col-8 mx-auto align-items-center justify-content-center">
+        <div class="row w-100 mb-5">
+            <h2 class="text-center text-primary mb-4 fw-bold">Logged Out</h2>
+        </div>
 
-    <p> You have been successfully logged out. </p>
+        <div clas="row w-100">
+            <p class="text-center">You have been successfully logged out.</p>
+        </div>
+    </div>
 {% endblock content %}
