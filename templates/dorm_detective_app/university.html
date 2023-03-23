@@ -1,6 +1,6 @@
 {% extends 'dorm_detective_app/base.html' %}
-{% load staticfiles %}
-{% load leaflet_tags %}
+<!--{% load staticfiles %}-->
+<!--{% load leaflet_tags %}-->
 
 {% block content %}
     <nav aria-label="breadcrumb">
@@ -45,7 +45,7 @@
                 </div>
                 <div class="row">
                     <div>
-                        {% leaflet_map "map" %}
+<!--                        {% leaflet_map "map" %}-->
                     </div>
                 </div>
 
@@ -76,17 +76,17 @@
         </div>
     </div>
 
-    <script>
-        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
-        });
+<!--    <script>-->
+<!--        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {-->
+<!--            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'-->
+<!--        });-->
 
-        const map = L.map('map', {
-            layers: [osm_map]
-        }).setView([{{ university.latitude }}, {{ university.longitude }}], 12);
+<!--        const map = L.map('map', {-->
+<!--            layers: [osm_map]-->
+<!--        }).setView([{{ university.latitude }}, {{ university.longitude }}], 12);-->
 
-        const marker = new L.Marker([{{ university.latitude }}, {{ university.longitude }}]);
-        marker.addTo(map)
-    </script>
+<!--        const marker = new L.Marker([{{ university.latitude }}, {{ university.longitude }}]);-->
+<!--        marker.addTo(map)-->
+<!--    </script>-->
 
 {% endblock %}
