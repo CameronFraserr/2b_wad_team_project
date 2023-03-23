@@ -48,9 +48,11 @@ def faq(request):
 
 
 @login_required
-def my_account(request):
+def my_account(request, user_id):
+    user = User.objects.get(id=user_id)
     universities = University.objects.all()
-    context = {"universities": universities}
+    reviews = Review.objects.filter(user=user)
+    context = {"universities": universities, "reviews": reviews, "user":user}
     template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 

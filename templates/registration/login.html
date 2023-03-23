@@ -1,25 +1,25 @@
-<!DOCTYPE html>
+{% extends 'dorm_detective_app/base.html' %}
 
-<html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>
-            Login
-        </title>
-    </head>
+{% block content %}
+    <div class="col-lg-1 justify-content-center mx-auto w-25">
+        <div class="row justify-content-center mb-3">
+            <h2 class="text-primary mb-4 fw-bold text-center">Log In</h2>
 
-    <body>
-        <div>
-            <h1>Sign up</h1>
-    
             <form method="post" action=".">
                 {% csrf_token %}
-        
+
                 {{ form.as_p }}
 
-                <input type="submit" value="Log In" />
-                <input type="hidden" name="next" value="{{ next }}" />
+                <input type="submit" value="Log In"/>
+                <input type="hidden" name="next" value="{{ next }}"/>
             </form>
         </div>
-    </body>
+        <div class="row justify-content-center">
+            <span>Don't have an account? <a href="{% url 'registration_register' %}">
+            <button type="button" class="btn btn-success">Register</button></a></span>
+        </div>
+    </div>
+    </div>
+
+{% endblock content %}
 </html>

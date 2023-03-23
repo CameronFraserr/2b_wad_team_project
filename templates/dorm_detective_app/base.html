@@ -43,12 +43,22 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'dorm_detective:faq' %}">FAQs</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'dorm_detective:contact_us' %}">Contact Us</a>
                 </li>
+            {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:sign_up' %}">Login/Sign Up</a>
+{#                    <a class="nav-link text-light" href="{% url 'dorm_detective:my_account' user %}">My Account</a>}#}
+                    <a class="navbar-brand" href="{% url 'dorm_detective:my_account' user.id %}">
+                        <img src="{{ MEDIA_URL }}/profile_pictures/{{ user.picture }}" class="rounded float-right">
+                    </a>
                 </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'dorm_detective:sign_up' %}">Sign Up</a>
+                </li>
+            {% endif %}
             </ul>
         </div>
     </nav>
