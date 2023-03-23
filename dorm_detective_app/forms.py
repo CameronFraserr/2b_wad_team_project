@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import UserProfile, Review
+from .models import UserProfile, Review, University
 from django import forms
 from registration.forms import RegistrationForm
 
@@ -53,9 +53,12 @@ class CustomRegistrationForm(RegistrationForm):
 
         if email and current_student:
             domain = email.split('@')[1]
-            allowed_domains = ["student.gla.ac.uk",
-                               "uni.strath.ac.uk",
-                               "caledonian.ac.uk"]  # add more domains as needed
+
+            allowed_domains = set()
+            universities = University.objects.all()
+            for university in universities:
+                allowed_domains.add(university.email_domain)
+
             if domain not in allowed_domains:
                 self.add_error('email', "Please use your university e-mail address.")
 
