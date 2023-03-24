@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from dorm_detective_app.models import *
 from datetime import datetime
 from django.contrib.auth import logout
+from dorm_detective_app.forms import ReviewForm
 
 
 def index(request):
@@ -72,7 +73,7 @@ def faq(request):
 @login_required
 def my_account(request, user_id):
     user = User.objects.get(id=user_id)
-    user_profile = UserProfile.objects.filter(user=user)[0]
+    user_profile = UserProfile.objects.get(user=user)
     universities = University.objects.all()
     reviews = Review.objects.filter(user=user.userprofile)
     context = {"universities": universities, "reviews": reviews, "user": user, "user_profile": user_profile}
@@ -146,8 +147,26 @@ def accommodation(request, university_slug, accommodation_slug):
         avg_rating = None
         rating_no = None
 
+    user_profile = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            pass
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.accommodation = accommodation
+            review.user = user_profile
+            review.save()
+            return redirect('.')
+    else:
+        form = ReviewForm()
+
     context = {"universities": universities, "accommodation": accommodation, "university": university,
-               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no}
+               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no, "form" : form, "user_profile" : user_profile}
     template_name = 'dorm_detective_app/accommodation.html'
     return render(request, template_name, context)
 
