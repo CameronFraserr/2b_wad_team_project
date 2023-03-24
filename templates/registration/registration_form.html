@@ -1,5 +1,9 @@
 {% extends 'dorm_detective_app/base.html' %}
 
+{% block title_block %}
+    Register
+{% endblock %}
+
 {% block content %}
     <div class="col-lg-1 justify-content-center mx-auto w-25">
         <div class="row justify-content-center mb-3">
@@ -15,7 +19,6 @@
             </form>
         </div>
         <div class="row justify-content-center">
-{#                        <span>Already got an account? <a href="login.html">#}
             <span>Already got an account? <a href="{% url 'auth_login' %}">
             <button type="button" class="btn btn-success">Login</button></a></span>
         </div>

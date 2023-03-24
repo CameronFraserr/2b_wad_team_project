@@ -1,6 +1,9 @@
 {% extends 'dorm_detective_app/base.html' %}
 
-<!--Section: FAQ-->
+{% block title_block %}
+    FAQ
+{% endblock %}
+
 {% block content %}
     <section>
         <h2 class="text-center mb-4 pb-2 text-primary fw-bold">FAQ</h2>
@@ -9,7 +12,7 @@
         </p>
 
         <div class="row justify-content-center">
-            <div class="col-md-4 col-lg-4 mb-5">
+            <div class="col-md-4 col-lg-4 mb-5 shadow p-3 bg-body rounded mx-1">
                 <h6 class="mb-3 text-primary"><i class="fas fa-pen-alt text-primary"></i> How do I leave a review?</h6>
                 <p>
                     To leave a review, you'll need to be a student at one of our supported universities and register
@@ -18,7 +21,7 @@
                 </p>
             </div>
 
-            <div class="col-md-4 col-lg-4 mb-5">
+            <div class="col-md-4 col-lg-4 mb-5 shadow p-3 bg-body rounded mx-1">
                 <h6 class="mb-3 text-primary"><i class="fas fa-star"></i> Are your reviews trustworthy?</h6>
                 <p>
                     <strong>Yes.</strong><br>All reviews on the site are made by verified students at each institution.
@@ -27,7 +30,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-4 col-lg-4">
+            <div class="col-md-4 col-lg-4 shadow p-3 bg-body rounded mx-1">
                 <h6 class="mb-3 text-primary"><i class="fas fa-graduation-cap text-primary"></i> I can't find my
                     University on the site
                 </h6>
@@ -37,7 +40,7 @@
                 </p>
             </div>
 
-            <div class="col-md-4 col-lg-4">
+            <div class="col-md-4 col-lg-4 shadow p-3 bg-body rounded mx-1">
                 <h6 class="mb-3 text-primary"><i class="fas fa-wallet text-primary"></i> Is Dorm Detective free to use?
                 </h6>
                 <p>
@@ -45,22 +48,6 @@
                 </p>
             </div>
 
-            {#    <div class="col-md-6 col-lg-4 mb-4">#}
-            {#      <h6 class="mb-3 text-primary"><i class="fas fa-home text-primary pe-2"></i> A simple#}
-            {#        question?#}
-            {#      </h6>#}
-            {#      <p><strong><u>Unfortunately no</u>.</strong> We do not issue full or partial refunds for any#}
-            {#        reason.</p>#}
-            {#    </div>#}
-            {##}
-            {#    <div class="col-md-6 col-lg-4 mb-4">#}
-            {#      <h6 class="mb-3 text-primary"><i class="fas fa-book-open text-primary pe-2"></i> Another#}
-            {#        question that is longer than usual</h6>#}
-            {#      <p>#}
-            {#        Of course! We’re happy to offer a free plan to anyone who wants to try our service.#}
-            {#      </p>#}
-            {#    </div>#}
         </div>
     </section>
 {% endblock content %}
-<!--Section: FAQ-->

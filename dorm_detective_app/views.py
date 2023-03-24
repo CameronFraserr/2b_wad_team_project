@@ -1,29 +1,55 @@
 from django.shortcuts import render
-from dorm_detective_app.forms import *
 from django.http import HttpResponse
-from django.urls import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 from dorm_detective_app.models import *
 from datetime import datetime
-from registration.backends.default.views import RegistrationView
-
-
-class CustomRegistrationView(RegistrationView):
-    def get_form_class(self):
-        return CustomRegistrationForm
+from django.contrib.auth import logout
+from dorm_detective_app.forms import ReviewForm
 
 
 def index(request):
     universities = University.objects.all()
     universities_supported = universities.count()
-    context = {"universities" : universities, "universities_supported" : universities_supported}
+    students_no = User.objects.all().count()
+
+    try:
+        accommodations = Accommodation.objects.all()
+
+        accommodations_ratings = {}
+
+        total_reviews = 0
+
+        total_likes = 0
+
+        for accommodation in accommodations:
+            rating_score = 0
+            reviews = Review.objects.filter(accommodation=accommodation)
+
+            if reviews.count() > 0:
+                total_reviews += reviews.count()
+
+                for review in reviews:
+                    rating_score += review.rating
+                    total_likes += review.likes
+
+                rating_score / reviews.count()
+
+                accommodations_ratings[accommodation] = rating_score
+
+        highest_rated_accommodations = sorted(accommodations_ratings, key=accommodations_ratings.get)[:4]
+
+    except Accommodation.DoesNotExist:
+        highest_rated_accommodations = None
+        total_reviews = None
+
+    context = {"universities": universities, "universities_supported": universities_supported,
+               "accommodations": highest_rated_accommodations, "total_reviews" : total_reviews, "students_no" : students_no, "total_likes" : total_likes}
     template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
 
-def about_us(request):
+def about(request):
     universities = University.objects.all()
     context = {"universities": universities}
     template_name = 'dorm_detective_app/about.html'
@@ -47,25 +73,31 @@ def faq(request):
 @login_required
 def my_account(request, user_id):
     user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.get(user=user)
     universities = University.objects.all()
-    reviews = Review.objects.filter(user=user)
-    context = {"universities": universities, "reviews": reviews, "user":user}
+    reviews = Review.objects.filter(user=user.userprofile)
+    context = {"universities": universities, "reviews": reviews, "user": user, "user_profile": user_profile}
     template_name = 'dorm_detective_app/my_account.html'
     return render(request, template_name, context)
 
 
 @login_required
-def my_reviews(request):
-    universities = University.objects.all()
-    context = {"universities": universities}
-    template_name = 'dorm_detective_app/my_reviews.html'
-    return render(request, template_name, context)
+def delete_account(request, user_id):
+    logout(request)
+
+    user = User.objects.get(id=user_id)
+    user_profile = UserProfile.objects.get(user=user)
+
+    user_profile.delete()
+    user.delete()
+
+    return redirect("/dorm_detective/")
 
 
 def universities(request):
     universities = University.objects.all()
     accommodations = Accommodation.objects.all()
-    context = {"universities": universities, "accommodations" : accommodations}
+    context = {"universities": universities, "accommodations": accommodations}
     template_name = 'dorm_detective_app/universities.html'
     return render(request, template_name, context)
 
@@ -83,7 +115,7 @@ def university(request, university_slug):
     if university is None:
         return redirect('/dorm_detective/')
 
-    context = {"universities": universities, "university" : university, "accommodations" : accommodations}
+    context = {"universities": universities, "university": university, "accommodations": accommodations}
     template_name = 'dorm_detective_app/university.html'
     return render(request, template_name, context)
 
@@ -94,7 +126,7 @@ def accommodation(request, university_slug, accommodation_slug):
     try:
         accommodation = Accommodation.objects.get(slug=accommodation_slug)
         university = accommodation.university
-        reviews = Review.objects.filter(accommodation=accommodation)
+        reviews = Review.objects.filter(accommodation=accommodation).order_by('-datetime')
 
         avg_rating = 0
         for review in reviews:
@@ -103,9 +135,8 @@ def accommodation(request, university_slug, accommodation_slug):
 
         rating_no = reviews.count()
         avg_rating /= rating_no
+        avg_rating = round(avg_rating, 1)
 
-
-        # accommodation_weekly_rent =
     except Accommodation.DoesNotExist:
         accommodation = None
         university = None
@@ -116,128 +147,28 @@ def accommodation(request, university_slug, accommodation_slug):
         avg_rating = None
         rating_no = None
 
-    context = {"universities": universities, "accommodation" : accommodation, "university" : university, "reviews" : reviews, "avg_rating" : avg_rating, "rating_no" : rating_no}
+    user_profile = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            pass
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.accommodation = accommodation
+            review.user = user_profile
+            review.save()
+            return redirect('.')
+    else:
+        form = ReviewForm()
+
+    context = {"universities": universities, "accommodation": accommodation, "university": university,
+               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no, "form" : form, "user_profile" : user_profile}
     template_name = 'dorm_detective_app/accommodation.html'
     return render(request, template_name, context)
-
-
-def sign_up(request):
-    # A boolean value for telling the template
-    # whether the registration was successful.
-    # Set to False initially. Code changes value to
-    # True when registration succeeds.
-    registered = False
-
-    # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
-        # Attempt to grab information from the raw form information.
-        # Note that we make use of both UserForm and UserProfileForm.
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
-
-        # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
-            # Save the user's form data to the database.
-            user = user_form.save()
-
-            # Now we hash the password with the set_password method.
-            # Once hashed, we can update the user object.
-            user.set_password(user.password)
-            user.save()
-
-            # Now sort out the UserProfile instance.
-            # Since we need to set the user attribute ourselves,
-            # we set commit=False. This delays saving the model
-            # until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and
-            # put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
-            profile.save()
-
-            # Update our variable to indicate that the template
-            # registration was successful.
-            registered = True
-        else:
-            # Invalid form or forms - mistakes or something else?
-            # Print problems to the terminal.
-            print(user_form.errors, profile_form.errors)
-    else:
-        # Not a HTTP POST, so we render our form using two ModelForm instances.
-        # These forms will be blank, ready for user input.
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    # Render the template depending on the context.
-    return render(request,
-                  'dorm_detective_app/sign_up.html',
-                  context={'user_form': user_form,
-                           'profile_form': profile_form,
-                           'registered': registered})
-
-
-def user_login(request):
-    # If the request is a HTTP POST, try to pull out the relevant information.
-    if request.method == 'POST':
-        # Gather the username and password provided by the user.
-        # This information is obtained from the login form.
-        # We use request.POST.get('<variable>') as opposed
-        # to request.POST['<variable>'], because the
-        # request.POST.get('<variable>') returns None if the
-        # value does not exist, while request.POST['<variable>']
-        # will raise a KeyError exception.
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        # Use Django's machinery to attempt to see if the username/password
-        # combination is valid - a User object is returned if it is.
-        user = authenticate(username=username, password=password)
-
-        # If we have a User object, the details are correct.
-        # If None (Python's way of representing the absence of a value), no user
-        # with matching credentials was found.
-        if user:
-            # Is the account active? It could have been disabled.
-            if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
-                login(request, user)
-                return redirect(reverse('dorm_detective:home'))
-            else:
-                # An inactive account was used - no logging in!
-                return HttpResponse("Your Dorm Detective account is disabled.")
-        else:
-            # Bad login details were provided. So we can't log the user in.
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
-
-    # The request is not a HTTP POST, so display the login form.
-    # This scenario would most likely be a HTTP GET.
-    else:
-        # No context variables to pass to the template system, hence the
-        # blank dictionary object...
-        return render(request, 'dorm_detective_app/login.html')
-
-
-@login_required
-def restricted(request):
-    # return HttpResponse("Since you're logged in, you can see this text!")
-    return render(request, 'dorm_detective_app/restricted.html')
-
-
-# access the view.
-@login_required
-def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
-    logout(request)
-    # Take the user back to the homepage.
-    return redirect(reverse('dorm_detective:home'))
 
 
 # A helper method
@@ -267,13 +198,9 @@ def visitor_cookie_handler(request):
     request.session['visits'] = visits
 
 
-def about(request):
-    response = render(request, 'dorm_detective_app/about.html')
-    return response
-
 def add_like(request):
     if request.method == "POST":
-        pk=request.POST["pk"]
+        pk = request.POST["pk"]
 
         try:
             review = Review.objects.get(pk=pk)
@@ -282,3 +209,9 @@ def add_like(request):
         except Review.DoesNotExist:
             pass
     return HttpResponse()
+
+@login_required
+def logout_account(request):
+    logout(request)
+
+    return redirect("/dorm_detective/")

@@ -1,18 +1,17 @@
-<!DOCTYPE html>
+{% extends 'dorm_detective_app/base.html' %}
 
-<html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>
-            Registration Closed
-        </title>
-    </head>
+{% block title_block %}
+    Registration Closed
+{% endblock %}
 
-    <body>
-        <div>
-            <h1>Registration Closed</h1>
-
-            <p>Unfortunately, registration is currently closed. Please try again later!</p>
+{% block content %}
+    <div class="d-flex flex-column col-8 mx-auto align-items-center justify-content-center">
+        <div class="row w-100 mb-5">
+            <h2 class="text-center text-primary mb-4 fw-bold">Registration Closed</h2>
         </div>
-    </body>
-</html>
+
+        <div clas="row w-100">
+            <p class="text-center">Unfortunately, registration is currently closed. Please try again later!</p>
+        </div>
+    </div>
+{% endblock content %}
