@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import UserProfile
-from .forms import UserForm, UserProfileForm, CustomRegistrationForm
+from .forms import UserForm, UserProfileForm
 
 class UniversityModelTest(TestCase):
 
