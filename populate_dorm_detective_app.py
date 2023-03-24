@@ -63,7 +63,7 @@ def populate():
          'description': "Toilets were very dirty.",
          'likes': 0,
          'rating': 1,
-         'image_path': POPULATION_RESOURCES + 'student_apart_rev1.jpg',
+         'image_path': POPULATION_RESOURCES + 'student_apart_rev2.jpg',
          },
     ]
 

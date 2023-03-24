@@ -12,7 +12,7 @@
                 <div class="col-lg-4">
                     <div class="card h-100">
                         <div class="card-body text-center">
-                            <img src="{% if user_profile.picture %}{{ MEDIA_URL }}/profile_pictures/{{ user_profile.picture }}{% else %}{{ STATIC_URL }}/images/default_pp.png{% endif %}" alt="profile picture"
+                            <img src="{% if user_profile.picture %}{{ user_profile.picture }}{% else %}{{ STATIC_URL }}/images/default_pp.png{% endif %}" alt="profile picture"
                                  class="rounded-circle img-fluid" style="width: 150px;">
                             <h5 class="my-3">{{ user.username }}</h5>
                             {% if user_profile.current_student %}
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{% url 'auth_logout' %}"><button type="button" class="btn btn-warning float-left">Logout</button></a>
+                    <a href="{% url 'dorm_detective:auth_logout' %}"><button type="button" class="btn btn-warning float-left">Logout</button></a>
                     <a href="{% url 'dorm_detective:delete_account' user.id %}"><button type="button" class="btn btn-danger float-right" data-toggle="tooltip" data-placement="top" title="Are you sure you want to do this?">Delete Account</button></a>
                 </div>
             </div>
@@ -73,7 +73,8 @@
                                     {% endif %}
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ r.accomodation.name }}</h5>
+                                            <h5 class="card-title">{{ r.accommodation.name }}</h5>
+                                            <h6 class="card-text"><b>{{ r.title }}</b></h6>
                                             <p class="card-text">{{ r.description }}</p>
                                             <p class="card-text text-muted">Likes: {{ r.likes }}</p>
                                             <p class="card-text text-muted">Rating: {{ r.rating }}</p>
