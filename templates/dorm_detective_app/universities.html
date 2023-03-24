@@ -23,7 +23,7 @@
             <div class="col">
                 <a href="{% url 'dorm_detective:university' u.slug %}" style="text-decoration: none; color: black">
                     <div class="card h-100">
-                        <img src="{% if u.picture %}{{ MEDIA_URL }}/university_images/{{ u.picture }}{% else %}{{ STATIC_URL }}/images/uni_default.jpg{% endif %}" class="card-img-top">
+                        <img src="{% if u.picture %}{{ MEDIA_URL }}{{ u.picture }}{% else %}{{ STATIC_URL }}/images/uni_default.jpg{% endif %}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title"><b>{{ u.name }}</b></h5>
                             <p class="card-text">{{ u.synopsis }}</p>

@@ -134,8 +134,9 @@ def accommodation(request, university_slug, accommodation_slug):
             avg_rating += rating
 
         rating_no = reviews.count()
-        avg_rating /= rating_no
-        avg_rating = round(avg_rating, 1)
+        if rating_no >= 1:
+            avg_rating /= rating_no
+            avg_rating = round(avg_rating, 1)
 
     except Accommodation.DoesNotExist:
         accommodation = None
