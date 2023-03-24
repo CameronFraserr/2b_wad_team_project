@@ -2,6 +2,12 @@
 {% load staticfiles %}
 {% load leaflet_tags %}
 
+{% if university %}
+    {% block title_block %}
+        {{ university.name }}
+    {% endblock %}
+{% endif %}
+
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

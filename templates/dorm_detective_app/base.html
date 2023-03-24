@@ -17,7 +17,7 @@
     {% leaflet_css %}
     <link rel="icon" href="{% static 'images/dd_favicon.png' %}" type="image/png">
     <title>
-        {% block title_block %} Dorm Detective {% endblock title_block %}
+        {% block title_block %}{% if block.content %}{{ block.content }}{% else %} Dorm Detective {% endif %}{% endblock title_block %}
     </title>
 </head>
 <body>

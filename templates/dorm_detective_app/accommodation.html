@@ -2,6 +2,12 @@
 {% load staticfiles %}
 {% load leaflet_tags %}
 
+{% if accommodation %}
+    {% block title_block %}
+        {{ accommodation.name }}
+    {% endblock %}
+{% endif %}
+
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
