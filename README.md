@@ -1,9 +1,8 @@
 # Dorm Detective - Team 2B
 
 ### How to Run:
-* `git` `clone` this repository
 * Ensure you have [GDAL](https://gdal.org/) installed on a **Linux** based system for Leaflet to work.
-  * If this is not possible, switch to the `no_maps` branch.
+  * If you are not on a **Linux** based system, switch to the `no_maps` branch.
 
 ### Sources:
 * [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
