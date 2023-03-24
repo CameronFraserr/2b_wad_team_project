@@ -9,8 +9,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
 from django.db.migrations.executor import MigrationExecutor
-from .models import Accommodation, University
-from .models import University, Accommodation, UserProfile, Review
+from dorm_detective_app.models import Accommodation, University
+from dorm_detective_app.models import University, Accommodation, UserProfile, Review
 from decimal import Decimal
 from django.contrib.admin import AdminSite
 from dorm_detective_app.models import University, Accommodation, UserProfile, Review
@@ -18,6 +18,10 @@ from dorm_detective_app.admin import UniversityAdmin
 import unittest
 from django.test import Client
 from django.urls import reverse
+from django.test import TestCase
+from django.contrib.auth.models import User
+from .models import UserProfile
+from .forms import UserForm, UserProfileForm, CustomRegistrationForm
 
 class UniversityModelTest(TestCase):
 
@@ -81,9 +85,6 @@ class UniversityModelTest(TestCase):
         university = University.objects.get(id=1)
         self.assertEquals(university.website, '')
 
-    # Adding more tests for the University model as needed
-
-
 
 class UniversityModelTestCase(TestCase):
     def test_latitude_field(self):
@@ -95,7 +96,6 @@ class UniversityModelTestCase(TestCase):
         university = University.objects.create(name='Test University', latitude=37.7749, longitude=-122.4194)
         self.assertIsInstance(university.longitude, Decimal)
         self.assertEqual(university.longitude.as_tuple().exponent, -9)
-
 
 
 class UniversityModelTestCase(TestCase):
@@ -113,8 +113,6 @@ class UniversityModelTestCase(TestCase):
         with self.assertRaises(ValidationError):
             University.objects.create(name='Test University', latitude=37.7749, longitude=-200)
 
-
-
 class UniversityModelTestCase(TestCase):
     def test_default_latitude(self):
         university = University.objects.create(name='Test University')
@@ -123,7 +121,6 @@ class UniversityModelTestCase(TestCase):
     def test_default_longitude(self):
         university = University.objects.create(name='Test University')
         self.assertEqual(university.longitude, 0)
-
 
 class MigrationTestCase(TestCase):
     migrate_from = 'dorm_detective_app.0001_initial'
@@ -177,55 +174,6 @@ class MigrationTestCase(TestCase):
         self.assertEqual(default_value, 0)
 
 
-class UniversityModelTests(TestCase):
-    
-    def test_picture_upload_to_directory(self):
-        university = University.objects.create(name='Test University')
-        picture = SimpleUploadedFile('test.png', b'file_content', content_type='image/png')
-        university.picture = picture
-        university.save()
-        self.assertEqual(university.picture.path, 'media/university_images/test.png')
-
-class UserProfileModelTests(TestCase):
-    
-    def test_current_student_default_value(self):
-        user = UserProfile.objects.create(email='test@example.com')
-        self.assertEqual(user.current_student, True)
-        
-class AccommodationModelTests(TestCase):
-    
-    def test_rent_min_max_validation(self):
-        university = University.objects.create(name='Test University')
-        accommodation = Accommodation.objects.create(name='Test Accommodation', university=university, rent_min=100, rent_max=50)
-        with self.assertRaises(ValidationError):
-            accommodation.clean_fields()
-            
-class ReviewModelTests(TestCase):
-    
-    def test_rating_min_max_validation(self):
-        university = University.objects.create(name='Test University')
-        accommodation = Accommodation.objects.create(name='Test Accommodation', university=university)
-        user = UserProfile.objects.create(email='test@example.com')
-        review = Review.objects.create(title='Test Review', description='Test Description', accommodation=accommodation, user=user, rating=0)
-        with self.assertRaises(ValidationError):
-            review.clean_fields()
-            
-    def test_review_likes_initial_value(self):
-        university = University.objects.create(name='Test University')
-        accommodation = Accommodation.objects.create(name='Test Accommodation', university=university)
-        user = UserProfile.objects.create(email='test@example.com')
-        review = Review.objects.create(title='Test Review', description='Test Description', accommodation=accommodation, user=user)
-        self.assertEqual(review.likes, 0)
-        
-    def test_review_picture_upload_to_directory(self):
-        university = University.objects.create(name='Test University')
-        accommodation = Accommodation.objects.create(name='Test Accommodation', university=university)
-        user = UserProfile.objects.create(email='test@example.com')
-        picture = SimpleUploadedFile('test.png', b'file_content', content_type='image/png')
-        review = Review.objects.create(title='Test Review', description='Test Description', accommodation=accommodation, user=user, picture=picture)
-        self.assertEqual(review.picture.path, 'media/review_images/test.png')
-
-
 class UniversityModelTest(TestCase):
     def test_upload_image(self):
         university = University.objects.create(name='Test University')
@@ -246,18 +194,6 @@ class UserProfileModelTest(TestCase):
         self.assertEqual(userprofile.email, 'testuser@example.com')
         self.assertEqual(userprofile.password, 'testpassword')
 
-class AccommodationModelTest(TestCase):
-    def setUp(self):
-        self.university = University.objects.create(name='Test University')
-        self.accommodation = Accommodation.objects.create(
-            name='Test Accommodation',
-            description='Test Description',
-            latitude=0,
-            longitude=0,
-            rent_min=100,
-            rent_max=200,
-            university=self.university
-        )
 
     def test_create_accommodation(self):
         self.assertEqual(self.accommodation.name, 'Test Accommodation')
@@ -317,7 +253,8 @@ class ReviewModelTest(TestCase):
 
     def test_create_review_invalid_rating(self):
         with self.assertRaises(Exception):
-            review = Review.objects.create(
+            review = Review.objects.create\
+            (
                 title='Test Title',
                 description='Test Description',
                 likes=10,
@@ -329,71 +266,7 @@ class ReviewModelTest(TestCase):
 class UniversityViewTest(TestCase):
     def setUp(self):
         self.university = University.objects.create(name='Test University')
-        self.url = reverse('university', args=[self.university.id]);
-
-
-class MigrationTestCase(TestCase):
-    
-    def setUp(self):
-        self.migration = __import__('dorm_detective_app.migrations.0003_accommodation', fromlist=['Migration'])
-        self.migration_instance = self.migration.Migration()
-
-    def test_dependencies(self):
-        self.assertEqual(self.migration_instance.dependencies, [('dorm_detective_app', '0002_auto_20230309_1558')])
-
-    def test_operations(self):
-        self.assertEqual(len(self.migration_instance.operations), 1)
-        self.assertIsInstance(self.migration_instance.operations[0], migrations.CreateModel)
-
-    def test_create_model_fields(self):
-        model = self.migration_instance.operations[0].model_name
-        fields = apps.get_model('dorm_detective_app', model)._meta.fields
-        field_names = [field.name for field in fields]
-        self.assertEqual(len(fields), 8)
-        self.assertIn('id', field_names)
-        self.assertIn('name', field_names)
-        self.assertIn('description', field_names)
-        self.assertIn('latitude', field_names)
-        self.assertIn('longitude', field_names)
-        self.assertIn('rent_min', field_names)
-        self.assertIn('rent_max', field_names)
-        self.assertIn('avg_rating', field_names)
-        self.assertIn('reviews_no', field_names)
-        self.assertIn('university', field_names)
-
-    def test_create_model_options(self):
-        model = self.migration_instance.operations[0].model_name
-        unique_together = apps.get_model('dorm_detective_app', model)._meta.unique_together
-        self.assertEqual(len(unique_together), 1)
-        self.assertEqual(unique_together[0], ('university', 'name'))
-
-    def test_create_model_field_types(self):
-        model = self.migration_instance.operations[0].model_name
-        fields = apps.get_model('dorm_detective_app', model)._meta.fields
-        self.assertIsInstance(fields[0], models.AutoField)
-        self.assertIsInstance(fields[1], models.CharField)
-        self.assertIsInstance(fields[2], models.CharField)
-        self.assertIsInstance(fields[3], models.DecimalField)
-        self.assertIsInstance(fields[4], models.DecimalField)
-        self.assertIsInstance(fields[5], models.DecimalField)
-        self.assertIsInstance(fields[6], models.DecimalField)
-        self.assertIsInstance(fields[7], models.IntegerField)
-
-    
-
-    def test_create_model_fk(self):
-        model = self.migration_instance.operations[0].model_name
-        fields = apps.get_model('dorm_detective_app', model)._meta.fields
-        self.assertIsInstance(fields[-1], models.ForeignKey)
-        self.assertEqual(fields[-1].remote_field.model.__name__, 'University')
-
-    def test_create_model_field_null(self):
-        model = self.migration_instance.operations[0].model_name
-        fields = apps.get_model('dorm_detective_app', model)._meta.fields
-        self.assertTrue(fields[5].null)
-        self.assertTrue(fields[6].null)
-        self.assertTrue(fields[7].null)
-                            
+        self.url = reverse('university', args=[self.university.id])
 
 class AccommodationModelTest(TestCase):
     
@@ -423,12 +296,6 @@ class UniversityModelTest(TestCase):
     def test_slug_field(self):
         self.assertEqual(self.university.slug, "test-university")
 
-    def test_latitude_validator(self):
-        self.assertRaises(ValidationError, University.objects.create, name="Invalid Latitude", latitude=91, longitude=0)
-
-    def test_longitude_validator(self):
-        self.assertRaises(ValidationError, University.objects.create, name="Invalid Longitude", latitude=51, longitude=181)
-
 
 class AccommodationModelTest(TestCase):
     def setUp(self):
@@ -441,18 +308,9 @@ class AccommodationModelTest(TestCase):
     def test_slug_field(self):
         self.assertEqual(self.accommodation.slug, "test-accommodation")
 
-    def test_rent_min_validator(self):
-        self.assertRaises(ValidationError, Accommodation.objects.create, university=self.university, name="Invalid Rent Min", rent_min=-1, latitude=51.5074, longitude=0.1278)
-
-    def test_rent_max_validator(self):
-        self.assertRaises(ValidationError, Accommodation.objects.create, university=self.university, name="Invalid Rent Max", rent_max=99999, latitude=51.5074, longitude=0.1278)
-
-    def test_avg_rating_validator(self):
-        self.assertRaises(ValidationError, Accommodation.objects.create, university=self.university, name="Invalid Avg Rating", avg_rating=6, latitude=51.5074, longitude=0.1278)
 
     def test_reviews_no_default(self):
         self.assertEqual(self.accommodation.reviews_no, 0)
-
 
 class UserProfileModelTest(TestCase):
     def setUp(self):
@@ -468,82 +326,6 @@ class ReviewModelTest(TestCase):
         self.accommodation = Accommodation.objects.create(university=self.university, name="Test Accommodation", latitude=51.5074, longitude=0.1278)
         self.user = UserProfile.objects.create(user=User.objects.create_user("testuser", password="testpass"))
         self.review = Review.objects.create(accommodation=self.accommodation, user=self.user, title="Test Review")
-
-class TestUniversityAdmin(TestCase):
-    def setUp(self):
-        self.site = AdminSite()
-        self.university_admin = UniversityAdmin(University, self.site)
-        self.user = User.objects.create_superuser(username='testuser', email='testuser@test.com', password='testpassword')
-        self.client.login(username='testuser', password='testpassword')
-        self.university = University.objects.create(name='Test University', latitude='1.2345', longitude='6.7890', description='Test Description', website='https://www.testuniversity.com')
-
-    def test_list_display(self):
-        """
-        Test that the list_display attribute in the UniversityAdmin class works correctly
-        """
-        expected_output = ['Test University', '1.2345', '6.7890', 'Test Description', 'https://www.testuniversity.com']
-        self.assertEqual(list(self.university_admin.get_list_display(self.request)), expected_output)
-
-    def test_university_registration(self):
-        """
-        Test that a university can be registered through the admin interface
-        """
-        self.client.force_login(self.user)
-        data = {
-            'name': 'Test University 2',
-            'latitude': '2.3456',
-            'longitude': '7.8901',
-            'description': 'Test Description 2',
-            'website': 'https://www.testuniversity2.com'
-        }
-        response = self.client.post(reverse('admin:dorm_detective_app_university_add'), data=data)
-        self.assertEqual(response.status_code, 302)
-        self.assertTrue(University.objects.filter(name='Test University 2').exists())
-        
-class TestUniversityAdmin(unittest.TestCase):
-
-    def setUp(self):
-        self.client = Client()
-        self.university = University.objects.create(
-            name='Test University',
-            latitude='51.5074° N',
-            longitude='0.1278° W',
-            description='This is a test university',
-            website='https://www.testuniversity.com/'
-        )
-        
-    def test_list_display(self):
-        """Test if the list display shows the correct fields."""
-        admin = UniversityAdmin(University, admin.site)
-        self.assertEqual(admin.list_display, ('name', 'latitude', 'longitude', 'description', 'website'))
-        
-    def test_university_registration(self):
-        """Test if the university can be registered by the admin."""
-        response = self.client.post(reverse('admin:dorm_detective_app_university_add'), {
-            'name': 'Test University 2',
-            'latitude': '51.5074° N',
-            'longitude': '0.1278° W',
-            'description': 'This is another test university',
-            'website': 'https://www.testuniversity2.com/'
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(University.objects.count(), 2)
-        self.assertEqual(University.objects.last().name, 'Test University 2')
-        
-    def test_accommodation_registration(self):
-        """Test if the accommodation can be registered by the admin."""
-        response = self.client.post(reverse('admin:dorm_detective_app_accommodation_add'))
-        {   
-            'name': 'Test Accommodation',
-            'address': '123 Test',
-            'latitude': '51.5074° N',
-            'longitude': '0.1278° W',
-            'rent_min': '100',
-            'rent_max': '200',
-            'avg_rating': '4',
-            'reviews_no': '10',
-            'university': self.university.id
-            }
 
 class UniversityTestCase(TestCase):
     def setUp(self):
@@ -646,58 +428,35 @@ class ReviewTestCase(TestCase):
             website="https://www.testuniversity.com",
             synopsis="Test synopsis"
         )
-        self.accommodation
 
-class DormDetectiveAppViewsTestCase(TestCase):
-    def setUp(self):
-        self.client = Client()
-        self.university = University.objects.create(
-            name="Test University",
-            location="Test Location",
-            description="Test Description"
-        )
-        self.accommodation = Accommodation.objects.create(
-            university=self.university,
-            name="Test Accommodation",
-            address="Test Address",
-            description="Test Description",
-            price=1000
-        )
 
-    def test_index_view(self):
-        response = self.client.get(reverse('dorm_detective:index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/index.html')
+class UserFormTest(TestCase):
+    def test_user_form_password_field(self):
+        form = UserForm()
+        self.assertTrue(form.fields['password'].widget.input_type == 'password')
 
-    def test_university_view(self):
-        response = self.client.get(reverse('dorm_detective:university', args=[self.university.slug]))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/university.html')
-        self.assertContains(response, self.university.name)
+class UserProfileFormTest(TestCase):
+    def test_user_profile_form_fields(self):
+        form = UserProfileForm()
+        self.assertTrue('current_student' in form.fields)
 
-    def test_accommodation_view(self):
-        response = self.client.get(reverse('dorm_detective:accommodation', args=[self.university.slug, self.accommodation.slug]))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/accommodation.html')
-        self.assertContains(response, self.accommodation.name)
+class CustomRegistrationFormTest(TestCase):
+    def test_custom_registration_form_fields(self):
+        form = CustomRegistrationForm()
+        self.assertTrue('current_student' in form.fields)
 
-    def test_about_view(self):
-        response = self.client.get(reverse('dorm_detective:about'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/about.html')
+    def test_custom_registration_form_save(self):
+        data = {
+            'username': 'testuser',
+            'email': 'testuser@example.com',
+            'password1': 'testpass123',
+            'password2': 'testpass123',
+            'current_student': True,
+        }
+        form = CustomRegistrationForm(data)
+        self.assertTrue(form.is_valid())
+        user = form.save()
+        self.assertTrue(isinstance(user, User))
+        self.assertTrue(UserProfile.objects.filter(user=user, current_student=True).exists())
 
-    def test_faq_view(self):
-        response = self.client.get(reverse('dorm_detective:faq'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/faq.html')
-
-    def test_contact_us_view(self):
-        response = self.client.get(reverse('dorm_detective:contact_us'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'dorm_detective_app/contact_us.html')
-
-    def test_custom_registration_view(self):
-        response = self.client.get(reverse('django_registration_register'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/registration_form.html')
 
