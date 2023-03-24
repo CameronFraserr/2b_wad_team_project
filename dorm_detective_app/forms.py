@@ -60,7 +60,7 @@ class CustomRegistrationForm(RegistrationForm):
                 allowed_domains.add(university.email_domain)
 
             if domain not in allowed_domains:
-                self.add_error('email', "Please use your university e-mail address.")
+                self.add_error('email', "Please use a student university e-mail address from an institution that our website supports.")
 
     def save(self, commit=True):
         user = super().save(commit=commit)
