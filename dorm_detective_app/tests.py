@@ -6,7 +6,6 @@ from decimal import Decimal
 from dorm_detective_app.models import University, Accommodation, Review
 from django.urls import reverse
 from django.test import TestCase
-from django.contrib.auth.models import User
 from .models import UserProfile
 from .forms import UserForm, UserProfileForm, CustomRegistrationForm
 
