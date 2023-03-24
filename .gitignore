@@ -130,3 +130,9 @@ dmypy.json
 
 # pycharm
 .idea/
+
+# media
+media/accommodation_images/*
+media/profile_images/*
+media/university_images/*
+media/review_images/*
