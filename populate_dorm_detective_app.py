@@ -2,6 +2,7 @@ import random
 
 import django
 import os
+import subprocess
 from django.utils import timezone
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dorm_detective.settings')
@@ -24,7 +25,22 @@ def populate():
          'password': "NEW_SKYNET123",
          'student': True,
          'image_path': POPULATION_RESOURCES + 'gptchat.png',
-         }
+         },
+        {'username': "PERSON1",
+         'password': "12340987",
+         'student': True,
+         'image_path': POPULATION_RESOURCES + 'aguy.jpg',
+         },
+        {'username': "PERSON2",
+         'password': "1234abcd",
+         'student': True,
+         'image_path': POPULATION_RESOURCES + 'alady.jpg',
+         },
+        {'username': "Elon Musk",
+         'password': "abcd",
+         'student': True,
+         'image_path': POPULATION_RESOURCES + 'musk.jfif',
+         },
     ]
 
     murano_revs = [
@@ -60,6 +76,36 @@ def populate():
          },
     ]
 
+    cairncross_house = [
+        {'title': "Perfect!",
+         'description': """Great stay! The room was clean and cozy, with all the necessary amenities. The location was 
+                        perfect, just a short walk from the beach. Would definitely recommend!""",
+         'likes': 13,
+         'rating': 5,
+         'image_path': None
+         },
+    ]
+
+    caledonian_court = [
+        {'title': "Lovely!",
+         'description': """Lovely accommodations with a stunning view! The staff were friendly and attentive, 
+                        and the room was spacious and comfortable. Would stay here again!""",
+         'likes': 6,
+         'rating': 5,
+         'image_path': POPULATION_RESOURCES + "caledonian_rev1.jpg"
+         },
+    ]
+
+    kelvinhaugh_street = [
+        {'title': "AWWW WHAT THE HECK!",
+         'description': """Disappointing experience. The room was not as clean as we had hoped and the noise level from 
+                        outside was very high. Would not recommend staying here.""",
+         'likes': 3,
+         'rating': 2,
+         'image_path': None
+         },
+    ]
+
     uofg_accommodations = [
         {'name': 'Student Apartments',
          'description': """Student Apartments offers self-catered undergraduate student houses and student flats based 
@@ -89,7 +135,7 @@ def populate():
          'longitude': -4.288789,
          'rent_max': 147.21,
          'rent_min': 147.21,
-         'revs': [],
+         'revs': kelvinhaugh_street,
          'image_path': POPULATION_RESOURCES + 'kelvin_street.jpg'
          },
         {'name': 'Cairncross House',
@@ -99,7 +145,7 @@ def populate():
          'longitude': -4.288789,
          'rent_max': 158.62,
          'rent_min': 114.38,
-         'revs': [],
+         'revs': cairncross_house,
          'image_path': POPULATION_RESOURCES + 'cairncross-house-exterior.jpg'
          },
     ]
@@ -128,7 +174,7 @@ def populate():
          'longitude': -4.248446,
          'rent_max': 160.23,
          'rent_min': 110.23,
-         'revs': [],
+         'revs': caledonian_court,
          'image_path': POPULATION_RESOURCES + 'caledonian_court.jfif',
          },
     ]
