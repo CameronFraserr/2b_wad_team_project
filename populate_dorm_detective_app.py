@@ -203,6 +203,7 @@ def populate():
                         Scotland's four ancient universities.""",
             'accommodations': uofg_accommodations,
             'image_path': POPULATION_RESOURCES + 'glasgow.jpg',
+            'email_domain':'student.gla.ac.uk'
         },
         'University of Strathclyde': {
             'latitude': 55.862194, 'longitude': -4.242386, 'website': 'https://www.strath.ac.uk/',
@@ -213,7 +214,8 @@ def populate():
                             Glasgow, Scotland. Founded in 1796 as the Andersonian Institute, it is Glasgow's 
                             second-oldest university.""",
             'accommodations': uofst_accommodations,
-            'image_path': POPULATION_RESOURCES + "strathclyde.jpg"
+            'image_path': POPULATION_RESOURCES + "strathclyde.jpg",
+            'email_domain':'uni.strath.ac.uk'
         },
         'Glasgow Caledonian University': {
             'latitude': 55.866883, 'longitude': -4.250399, 'website': 'https://www.gcu.ac.uk/',
@@ -224,7 +226,8 @@ def populate():
                             public university in Glasgow, Scotland. It was formed in 1993 by the merger of The Queen's College,
                             Glasgow and Glasgow Polytechnic.""",
             'accommodations': uofcal_accommodations,
-            'image_path': POPULATION_RESOURCES + "caledonian.jpg"
+            'image_path': POPULATION_RESOURCES + "caledonian.jpg",
+            'email_domain':'caledonian.ac.uk'
         },
     }
 

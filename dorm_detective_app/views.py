@@ -93,6 +93,9 @@ def delete_account(request, user_id):
 
     return redirect("/dorm_detective/")
 
+def custom_logout(request):
+    logout(request)
+    return redirect('index')
 
 def universities(request):
     universities = University.objects.all()
