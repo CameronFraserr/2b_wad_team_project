@@ -81,7 +81,27 @@ def populate():
          'rent_min': 134.47,
          'revs': murano_revs,
          'image_path': POPULATION_RESOURCES + 'murano.jfif'
-         }
+         },
+        {'name': 'Kelvinhaugh Street',
+         'description': """Whether you are an undergraduate or postgraduate, our great value option at Kelvinhaugh 
+         Street has everything you need for a comfortable and enjoyable stay.""",
+         'latitude': 55.864714,
+         'longitude': -4.288789,
+         'rent_max': 147.21,
+         'rent_min': 147.21,
+         'revs': [],
+         'image_path': POPULATION_RESOURCES + 'kelvin_street.jpg'
+         },
+        {'name': 'Cairncross House',
+         'description': """Traditional style Hall of Residence with a contemporary common room, study room and computer 
+         cluster located in the vibrant Finnieston area.""",
+         'latitude': 55.864714,
+         'longitude': -4.288789,
+         'rent_max': 158.62,
+         'rent_min': 114.38,
+         'revs': [],
+         'image_path': POPULATION_RESOURCES + 'cairncross-house-exterior.jpg'
+         },
     ]
 
     uofst_accommodations = [
