@@ -1,5 +1,5 @@
 {% extends 'dorm_detective_app/base.html' %}
-{% load leaflet_tags %}
+{#{% load leaflet_tags %}#}
 
 {% block title_block %}
     Contact Us
@@ -27,21 +27,21 @@
             <br>Feel free to pay us a visit too. Find us at the location shown on the right :) 
         </div>
         <div class="col-lg-6">
-            {% leaflet_map "map" %}
+{#            {% leaflet_map "map" %}#}
         </div>
 
     </div>
 
-    <script>
-        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
-        });
-
-        const map = L.map('map', {
-            layers: [osm_map]
-        }).setView([55.871148, -4.288634], 12);
-
-        const marker = new L.Marker([55.871148, -4.288634]);
-        marker.addTo(map)
-    </script>
+{#    <script>#}
+{#        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {#}
+{#            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'#}
+{#        });#}
+{##}
+{#        const map = L.map('map', {#}
+{#            layers: [osm_map]#}
+{#        }).setView([55.871148, -4.288634], 12);#}
+{##}
+{#        const marker = new L.Marker([55.871148, -4.288634]);#}
+{#        marker.addTo(map)#}
+{#    </script>#}
 {% endblock content %}

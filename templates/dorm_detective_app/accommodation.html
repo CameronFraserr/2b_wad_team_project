@@ -1,6 +1,6 @@
 {% extends 'dorm_detective_app/base.html' %}
 {% load staticfiles %}
-{% load leaflet_tags %}
+{#{% load leaflet_tags %}#}
 
 {% if accommodation %}
     {% block title_block %}
@@ -24,20 +24,7 @@
         <div class="row mb-3">
             <div class="col-lg-4">
                 <div class="row mb-1">
-                    <img class="w-100 h-100" src="
-
-
-
-
-
-
-
-
-
-
-
-                            {% if accommodation.picture %}{{ MEDIA_URL }}{{ accommodation.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
-                         alt="accommodation picture">
+                    <img class="w-100 h-100" src="{% if accommodation.picture %}{{ MEDIA_URL }}{{ accommodation.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"  alt="accommodation picture">
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-8 shadow p-3 bg-body rounded">
@@ -73,7 +60,7 @@
                 </div>
                 <div class="row">
                     <div>
-                        {% leaflet_map "map" %}
+{#                        {% leaflet_map "map" %}#}
                     </div>
                 </div>
             </div>
@@ -174,18 +161,18 @@
         </form>
 
         <script href="{{ STATIC_URL }}/js/carousel.js" type="text/javascript"></script>
-        <script>
-            const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
-            });
-
-            const map = L.map('map', {
-                layers: [osm_map]
-            }).setView([{{ accommodation.latitude }}, {{ accommodation.longitude }}], 12);
-
-            const marker = new L.Marker([{{ accommodation.latitude }}, {{ accommodation.longitude }}]);
-            marker.addTo(map)
-        </script>
+{#        <script>#}
+{#            const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {#}
+{#                attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'#}
+{#            });#}
+{##}
+{#            const map = L.map('map', {#}
+{#                layers: [osm_map]#}
+{#            }).setView([{{ accommodation.latitude }}, {{ accommodation.longitude }}], 12);#}
+{##}
+{#            const marker = new L.Marker([{{ accommodation.latitude }}, {{ accommodation.longitude }}]);#}
+{#            marker.addTo(map)#}
+{#        </script>#}
         <script>
             function addLike(pk) {
                 console.log($("#csrf").serializeArray()[0]["value"]);
