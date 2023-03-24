@@ -125,7 +125,7 @@ def accommodation(request, university_slug, accommodation_slug):
     try:
         accommodation = Accommodation.objects.get(slug=accommodation_slug)
         university = accommodation.university
-        reviews = Review.objects.filter(accommodation=accommodation)
+        reviews = Review.objects.filter(accommodation=accommodation).order_by('-datetime')
 
         avg_rating = 0
         for review in reviews:
