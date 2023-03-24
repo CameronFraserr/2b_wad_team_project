@@ -1,5 +1,12 @@
 {% extends 'dorm_detective_app/base.html' %}
 {% load staticfiles %}
+{% load leaflet_tags %}
+
+{% if university %}
+    {% block title_block %}
+        {{ university.name }}
+    {% endblock %}
+{% endif %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
@@ -13,13 +20,20 @@
     <div class="container-fluid">
         <div class="row mb-3">
             <div class="col-lg-4">
-                <img class="w-100 h-100" src="{% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}" alt="university picture">
+                <img class="w-100 h-100" src="
+
+
+
+
+
+                        {% if university.picture %}{{ MEDIA_URL }}{{ university.picture }}{% else %}{{ STATIC_URL }}images/uni_default.jpg{% endif %}"
+                     alt="university picture">
             </div>
             <div class="col-lg-8">
-                <div class="d-flex align-items-center justify-content-center">
-                    <h1><b>{% if university.name %}{{ university.name }}{% endif %}</b></h1>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <h1 class="text-primary"><b>{% if university.name %}{{ university.name }}{% endif %}</b></h1>
                 </div>
-                <div class="about-content d-flex align-items-center justify-content-center">
+                <div class="about-content d-flex align-items-center justify-content-center shadow p-3 bg-body rounded">
                     <p class="text-center">
                         {% if university.description %}
                             {{ university.description }}
@@ -32,37 +46,53 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <div class="row align-items-center justify-content-center">
-                    <h2 class="text-center"><b>Location</b></h2>
+                <div class="row align-items-center justify-content-center ">
+                    <h2 class="text-center text-primary"><b>Location</b></h2>
                 </div>
                 <div class="row">
-                    <img class="w-100 h-100" src="{{ MEDIA_URL }}ggowmap.jpg" alt="map of university location">
+                    <div>
+                        {% leaflet_map "map" %}
+                    </div>
                 </div>
 
             </div>
             <div class="col-lg-8">
                 <div class="row">
-                    <h2 class="text-center"><b>Accommodations</b></h2>
+                    <h2 class="text-center text-primary"><b>Accommodations</b></h2>
                 </div>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-
-                {% for a in accommodations %}
-                    <div class="col">
-                        <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"style="text-decoration: none; color: black">
-                            <div class="card h-100">
-                                <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title"><b>{{ a.name }}</b></h5>
-                                    <p class="card-text">{{ a.description }}</p>
+                    {% for a in accommodations %}
+                        <div class="col">
+                            <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"
+                               style="text-decoration: none; color: black">
+                                <div class="card h-100">
+                                    <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
+                                         class="card-img-top">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><b>{{ a.name }}</b></h5>
+                                        <p class="card-text">{{ a.description }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
+                            </a>
+                        </div>
+                    {% endfor %}
 
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
+        });
+
+        const map = L.map('map', {
+            layers: [osm_map]
+        }).setView([{{ university.latitude }}, {{ university.longitude }}], 12);
+
+        const marker = new L.Marker([{{ university.latitude }}, {{ university.longitude }}]);
+        marker.addTo(map)
+    </script>
 
 {% endblock %}

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% load staticfiles %}
+{% load leaflet_tags %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <html lang="en">
@@ -12,11 +13,12 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% leaflet_js %}
+    {% leaflet_css %}
     <link rel="icon" href="{% static 'images/dd_favicon.png' %}" type="image/png">
     <title>
-        {% block title_block %} Dorm Detective {% endblock title_block %}
+        {% block title_block %}{% if block.content %}{{ block.content }}{% else %} Dorm Detective {% endif %}{% endblock title_block %}
     </title>
-
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-primary navbar-light fixed-top">
@@ -41,12 +43,22 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'dorm_detective:faq' %}">FAQs</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'dorm_detective:contact_us' %}">Contact Us</a>
                 </li>
+            {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:sign_up' %}">Login/Sign Up</a>
+                    <a class="navbar-brand text-light" href="{% url 'dorm_detective:my_account' user.id %}">
+                        My Account
+                        <img src="{% if user_profile.picture %}{{ MEDIA_URL }}/profile_pictures/{{ user_profile.picture }}{% else %}{% static 'images/default_pp.png' %}{% endif %}" class="rounded" height="45px;" width="50px;" style="margin-left: 10px;">
+                    </a>
                 </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="{% url 'registration_register' %}">Register/Log In</a>
+                </li>
+            {% endif %}
             </ul>
         </div>
     </nav>
