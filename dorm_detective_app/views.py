@@ -91,7 +91,7 @@ def delete_account(request, user_id):
     user_profile.delete()
     user.delete()
 
-    return redirect("/dorm_detective/")
+    return redirect("/dorm-detective/")
 
 
 def custom_logout(request):
@@ -118,7 +118,7 @@ def university(request, university_slug):
         accommodations = None
 
     if university is None:
-        return redirect('/dorm_detective/')
+        return redirect('/dorm-detective/')
 
     context = {"universities": universities, "university": university, "accommodations": accommodations}
     template_name = 'dorm_detective_app/university.html'
@@ -195,4 +195,4 @@ def add_like(request):
 def logout_account(request):
     logout(request)
 
-    return redirect("/dorm_detective/")
+    return redirect("/dorm-detective/")

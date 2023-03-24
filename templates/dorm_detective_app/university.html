@@ -11,8 +11,8 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:universities' %}">Universities</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm-detective:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm-detective:universities' %}">Universities</a></li>
             <li class="breadcrumb-item active">{% if university.name %}{{ university.name }}{% endif %}</li>
         </ol>
     </nav>
@@ -65,7 +65,7 @@
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     {% for a in accommodations %}
                         <div class="col">
-                            <a href="{% url 'dorm_detective:accommodation' university.slug a.slug %}"
+                            <a href="{% url 'dorm-detective:accommodation' university.slug a.slug %}"
                                style="text-decoration: none; color: black">
                                 <div class="card h-100">
                                     <img src="

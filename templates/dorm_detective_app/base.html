@@ -24,39 +24,39 @@
     <nav class="navbar navbar-expand-sm bg-primary navbar-light fixed-top">
         <div class="container-fluid">
             <ul class="navbar-nav flex-grow-1 justify-content-center nav-fill align-items-center">
-                <a class="navbar-brand text-light" href="{% url 'dorm_detective:index' %}">
+                <a class="navbar-brand text-light" href="{% url 'dorm-detective:index' %}">
                     <img src="{% static 'images/dd_logo.png' %}" alt="Dorm Detective Logo" height="65px;" width="75px;">
                 </a>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#", role="button" data-bs-toggle="dropdown">Universities</a>
                     <ul class="dropdown-menu">
                         {% for u in universities %}
-                            <li><a class="dropdown-item" href="{% url 'dorm_detective:university' u.slug %}">{{ u.name }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'dorm-detective:university' u.slug %}">{{ u.name }}</a></li>
                         {% endfor %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'dorm_detective:universities' %}">All Universities</a></li>
+                        <li><a class="dropdown-item" href="{% url 'dorm-detective:universities' %}">All Universities</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:about' %}">About Us</a>
+                    <a class="nav-link text-light" href="{% url 'dorm-detective:about' %}">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:faq' %}">FAQs</a>
+                    <a class="nav-link text-light" href="{% url 'dorm-detective:faq' %}">FAQs</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:contact_us' %}">Contact Us</a>
+                    <a class="nav-link text-light" href="{% url 'dorm-detective:contact_us' %}">Contact Us</a>
                 </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="navbar-brand text-light" href="{% url 'dorm_detective:my_account' user.id %}">
+                    <a class="navbar-brand text-light" href="{% url 'dorm-detective:my_account' user.id %}">
                         My Account
                         <img src="{% if user_profile.picture %}{{ user_profile.picture }}{% else %}{% static 'images/default_pp.png' %}{% endif %}" class="rounded" height="45px;" width="50px;" style="margin-left: 10px;">
                     </a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="{% url 'dorm_detective:registration_register' %}">Register/Log In</a>
+                    <a class="nav-link text-light" href="{% url 'dorm-detective:registration_register' %}">Register/Log In</a>
                 </li>
             {% endif %}
             </ul>

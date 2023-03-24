@@ -11,10 +11,10 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:universities' %}">Universities</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm-detective:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm-detective:universities' %}">Universities</a></li>
             <li class="breadcrumb-item"><a
-                    href="{% if university.slug %}{% url 'dorm_detective:university' university.slug %}
+                    href="{% if university.slug %}{% url 'dorm-detective:university' university.slug %}
                 {% endif %}">{{ university.name }}</a></li>
             <li class="breadcrumb-item active">{% if accommodation.name %}{{ accommodation.name }}{% endif %}</li>
         </ol>
@@ -114,7 +114,7 @@
                                                          width="35px;">
                                                      {{ r.user }}</span>
                                                 {% else %}
-                                                    <i class="fas fa-user text-muted"></i> Anonymous
+                                                    <span class="card-text text-muted"><i class="fas fa-user"></i> Anonymous</span>
                                                 {% endif %}
                                             {% endif %}
                                             <p class="card-text text-muted mt-3">
@@ -174,7 +174,6 @@
         </form>
 
         <script href="{{ STATIC_URL }}/js/carousel.js" type="text/javascript"></script>
-        {#        <script href="{{ STATIC_URL }}/js/addLike.js" type="text/javascript"></script>#}
         <script>
             const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
@@ -197,7 +196,7 @@
                     }
                 });
                 $.ajax({
-                    url: "/dorm_detective/add-like/",
+                    url: "/dorm-detective/add-like/",
                     type: "POST",
                     data: {"pk": pk}
                 }).done(function (response) {

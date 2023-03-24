@@ -1,7 +1,7 @@
 from django.urls import path, include
 from dorm_detective_app import views
 
-app_name = 'dorm_detective'
+app_name = 'dorm-detective'
 
 urlpatterns = [
     path('', views.index, name='index'),

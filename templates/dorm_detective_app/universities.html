@@ -7,7 +7,7 @@
 {% block content %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'dorm_detective:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'dorm-detective:index' %}">Home</a></li>
             <li class="breadcrumb-item active">Universities</li>
         </ol>
     </nav>
@@ -21,7 +21,7 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for u in universities %}
             <div class="col">
-                <a href="{% url 'dorm_detective:university' u.slug %}" style="text-decoration: none; color: black">
+                <a href="{% url 'dorm-detective:university' u.slug %}" style="text-decoration: none; color: black">
                     <div class="card h-100">
                         <img src="{% if u.picture %}{{ MEDIA_URL }}{{ u.picture }}{% else %}{{ STATIC_URL }}/images/uni_default.jpg{% endif %}" class="card-img-top">
                         <div class="card-body">
@@ -33,7 +33,7 @@
                             {% if a.university == u %}
                                 <ul class="list-group list-group-flush">
                                     <div class="list-group-item">
-                                        <a href="{% url 'dorm_detective:accommodation' u.slug a.slug %}">{{ a.name }}</a>
+                                        <a href="{% url 'dorm-detective:accommodation' u.slug a.slug %}">{{ a.name }}</a>
                                     </div>
                                 </ul>
                             {% endif %}

@@ -4,7 +4,7 @@
     <div class="d-flex align-items-center justify-content-center flex-column gap-4 mb-5">
         <form class="search-box d-flex">
             <input class="search-text form-control me-1" type="search" placeholder="Find your University...">
-            <a href="{% url 'dorm_detective:universities' %}">
+            <a href="{% url 'dorm-detective:universities' %}">
                 <button type="button" class="btn btn-success">
                     <i class="fas fa-search"></i>
                 </button>
@@ -33,7 +33,7 @@
                     <div class="row row-cols-1 row-cols-md-4 g-4">
                     {% for a in accommodations %}
                         <div class="col">
-                            <a href="{% url 'dorm_detective:accommodation' a.university.slug a.slug %}"
+                            <a href="{% url 'dorm-detective:accommodation' a.university.slug a.slug %}"
                                style="text-decoration: none; color: black">
                                 <div class="card h-100">
                                     <img src="{% if a.picture %}{{ MEDIA_URL }}{{ a.picture }}{% else %}{{ STATIC_URL }}images/accom_default.jpg{% endif %}"
