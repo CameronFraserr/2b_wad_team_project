@@ -1,5 +1,5 @@
 {% extends 'dorm_detective_app/base.html' %}
-{#{% load leaflet_tags %} #}
+{% load leaflet_tags %}
 
 {% block title_block %}
     Contact Us
@@ -20,18 +20,19 @@
             Email: <a href="mailto: lab2b@student.gla.ac.uk">lab2b@student.gla.ac.uk</a>
             <br>Phone: <a href="tel: 0141 330 2000">0141 330 2000</a>
             <br>
-            <br>Looking for a quicker answer? <br> Check out our <a href="{% url 'dorm_detective:faq' %}">FAQ's</a> to see
+            <br>Looking for a quicker answer? <br> Check out our <a href="{% url 'dorm_detective:faq' %}">FAQ's</a> to
+            see
             the answers to our most common questions!
             <br>
             <br>Feel free to pay us a visit too. Find us at the location shown on the right :) 
         </div>
         <div class="col-lg-6">
-            {#{% leaflet_map "map" %}#}
+            {% leaflet_map "map" %}
         </div>
 
     </div>
 
-    <!-- <script>
+    <script>
         const osm_map = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '<a href="https://www.openstreetmap.org/copright">OpenStreetMap</a>'
         });
@@ -42,5 +43,5 @@
 
         const marker = new L.Marker([55.871148, -4.288634]);
         marker.addTo(map)
-    </script> -->
+    </script>
 {% endblock content %}

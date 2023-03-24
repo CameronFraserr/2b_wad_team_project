@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'dorm_detective_app',
     'registration',
     'bootstrap5',
-    # 'leaflet'
+    'leaflet'
 ]
 
 MIDDLEWARE = [
