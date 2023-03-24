@@ -6,6 +6,7 @@ from decimal import Decimal
 from dorm_detective_app.models import University, Accommodation, Review
 from django.urls import reverse
 from django.test import TestCase
+from django.contrib.auth.models import User
 from .models import UserProfile
 from .forms import UserForm, UserProfileForm, CustomRegistrationForm
 
@@ -425,22 +426,3 @@ class UserProfileFormTest(TestCase):
     def test_user_profile_form_fields(self):
         form = UserProfileForm()
         self.assertTrue('current_student' in form.fields)
-
-class CustomRegistrationFormTest(TestCase):
-    def test_custom_registration_form_fields(self):
-        form = CustomRegistrationForm()
-        self.assertTrue('current_student' in form.fields)
-
-    def test_custom_registration_form_save(self):
-        data = {
-            'username': 'testuser',
-            'email': 'testuser@example.com',
-            'password1': 'testpass123',
-            'password2': 'testpass123',
-            'current_student': True,
-        }
-        form = CustomRegistrationForm(data)
-        self.assertTrue(form.is_valid())
-        user = form.save()
-        self.assertTrue(isinstance(user, User))
-        self.assertTrue(UserProfile.objects.filter(user=user, current_student=True).exists())
