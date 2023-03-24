@@ -141,6 +141,7 @@ class Review(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=False)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     description = models.CharField(max_length=DESCRIPTION_MAX_LENGTH)
+    isAnonymous = models.BooleanField(default=False)
     picture = models.ImageField(upload_to='review_images', blank=True, null=True)
     likes = models.IntegerField(
         validators=[
