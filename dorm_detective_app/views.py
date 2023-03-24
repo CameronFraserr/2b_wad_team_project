@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from dorm_detective_app.models import *
-from datetime import datetime
 from django.contrib.auth import logout
 from dorm_detective_app.forms import ReviewForm
 
@@ -44,7 +43,8 @@ def index(request):
         total_reviews = None
 
     context = {"universities": universities, "universities_supported": universities_supported,
-               "accommodations": highest_rated_accommodations, "total_reviews" : total_reviews, "students_no" : students_no, "total_likes" : total_likes}
+               "accommodations": highest_rated_accommodations, "total_reviews": total_reviews,
+               "students_no": students_no, "total_likes": total_likes}
     template_name = 'dorm_detective_app/index.html'
     return render(request, template_name, context)
 
@@ -93,9 +93,11 @@ def delete_account(request, user_id):
 
     return redirect("/dorm_detective/")
 
+
 def custom_logout(request):
     logout(request)
     return redirect('index')
+
 
 def universities(request):
     universities = University.objects.all()
@@ -170,36 +172,10 @@ def accommodation(request, university_slug, accommodation_slug):
         form = ReviewForm()
 
     context = {"universities": universities, "accommodation": accommodation, "university": university,
-               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no, "form" : form, "user_profile" : user_profile}
+               "reviews": reviews, "avg_rating": avg_rating, "rating_no": rating_no, "form": form,
+               "user_profile": user_profile}
     template_name = 'dorm_detective_app/accommodation.html'
     return render(request, template_name, context)
-
-
-# A helper method
-def get_server_side_cookie(request, cookie, default_val=None):
-    val = request.session.get(cookie)
-    if not val:
-        val = default_val
-    return val
-
-
-# Updated the function definition
-def visitor_cookie_handler(request):
-    visits = int(get_server_side_cookie(request, 'visits', '1'))
-    last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
-    last_visit_time = datetime.strptime(last_visit_cookie[:-7], '%Y-%m-%d %H:%M:%S')
-
-    # If it's been more than a day since the last visit...
-    if (datetime.now() - last_visit_time).days > 0:
-        visits = visits + 1
-        # Update the last visit cookie now that we have updated the count
-        request.session['last_visit'] = str(datetime.now())
-    else:
-        # Set the last visit cookie
-        request.session['last_visit'] = last_visit_cookie
-
-    # Update/set the visits cookie
-    request.session['visits'] = visits
 
 
 def add_like(request):
@@ -213,6 +189,7 @@ def add_like(request):
         except Review.DoesNotExist:
             pass
     return HttpResponse()
+
 
 @login_required
 def logout_account(request):

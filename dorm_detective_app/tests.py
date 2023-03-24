@@ -1,22 +1,9 @@
 import tempfile
-from django.test import TestCase
-from .models import University, UserProfile, Accommodation, Review
-from django.contrib.auth.models import User
-from dorm_detective_app.models import University
-from django.db import migrations, models
 from django.apps import apps
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
-from django.db.migrations.executor import MigrationExecutor
-from dorm_detective_app.models import Accommodation, University
-from dorm_detective_app.models import University, Accommodation, UserProfile, Review
 from decimal import Decimal
-from django.contrib.admin import AdminSite
-from dorm_detective_app.models import University, Accommodation, UserProfile, Review
-from dorm_detective_app.admin import UniversityAdmin
-import unittest
-from django.test import Client
+from dorm_detective_app.models import University, Accommodation, Review
 from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -458,5 +445,3 @@ class CustomRegistrationFormTest(TestCase):
         user = form.save()
         self.assertTrue(isinstance(user, User))
         self.assertTrue(UserProfile.objects.filter(user=user, current_student=True).exists())
-
-
