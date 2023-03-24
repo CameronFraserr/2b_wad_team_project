@@ -16,6 +16,7 @@ urlpatterns = [
 	path('contact_us/', views.contact_us, name='contact_us'),
 	path('account/<int:user_id>/', views.my_account, name='my_account'),
 	path('add-like/', views.add_like, name="add_like"),
+    path('logout/', views.custom_logout, name='auth_logout'),
     path('', include('registration.backends.simple.urls')) 
     
 ]

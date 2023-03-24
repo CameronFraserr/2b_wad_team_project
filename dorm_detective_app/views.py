@@ -55,6 +55,9 @@ def my_reviews(request):
     template_name = 'dorm_detective_app/my_reviews.html'
     return render(request, template_name, context)
 
+def custom_logout(request):
+    logout(request)
+    return redirect('index')
 
 def universities(request):
     universities = University.objects.all()
